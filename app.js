@@ -11,17 +11,13 @@ document.addEventListener('DOMContentLoaded', () => {
 	// Неделя
 	const weekdaysHTML = createWeekdays(weekDays, 3)
 
-	// События
-	// events.sort((a, b) => {
-	// 	if (a.timeStart > b.timeStart) return 1
-	// 	if (a.timeStart < b.timeStart) return -1
-	// 	return 0
-	// })
-
 	const eventsHTML = createEventsList(events)
 
 	// Нижнее меню
 	const bottomNavHTML = createBottomNav()
 
-	app.innerHTML = tabsHTML + weekdaysHTML + eventsHTML + bottomNavHTML
+	const modalHTML = createModal()
+
+	app.innerHTML =
+		tabsHTML + weekdaysHTML + eventsHTML + bottomNavHTML + modalHTML
 })

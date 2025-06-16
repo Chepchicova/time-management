@@ -48,4 +48,19 @@ const events = [
 		notification: true,
 		theme: EventThemes.HEALTH,
 	},
+	{
+		id: 3,
+		title: 'Совещание с разработчиками',
+		date: '2023-06-23', // Формат YYYY-MM-DD
+		timeStart: '15:00', // Формат HH:MM (24h)
+		timeEnd: '16:30', // Формат HH:MM (24h)
+		person: {
+			id: 101,
+			name: 'Иван Петров',
+			role: 'Тимлид',
+		},
+		notification: true,
+		theme: EventThemes.WORK,
+		description: 'Обсуждение этапов проекта',
+	},
 ]
