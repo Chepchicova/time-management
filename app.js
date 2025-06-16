@@ -1,21 +1,26 @@
 // Основная логика приложения (позже можно заменить данные на реальные из БД)
 
-document.addEventListener("DOMContentLoaded", () => {
-  const app = document.getElementById("app");
+document.addEventListener('DOMContentLoaded', () => {
+	const app = document.getElementById('app')
 
-  // Верхние вкладки
-  const tabsHTML = `<div class="tabs">
-    ${["Day", "Week", "Month"].map((t, i) => createTab(t, i === 1)).join('')}
-  </div>`;
+	// Верхние вкладки
+	const tabsHTML = `<div class="tabs">
+    ${['Day', 'Week', 'Month'].map((t, i) => createTab(t, i === 1)).join('')}
+  </div>`
 
-  // Неделя
-  const weekdaysHTML = createWeekdays(weekDays, 3);
+	// Неделя
+	const weekdaysHTML = createWeekdays(weekDays, 3)
 
-  // События
-  const eventsHTML = createEventsList(events);
+	// События
+	events.sort((a, b) => {
+		if (a.timeStart > b.timeStart) return 1
+		if (a.timeStart < b.timeStart) return -1
+		return 0
+	})
+	const eventsHTML = createEventsList(events)
 
-  // Нижнее меню
-  const bottomNavHTML = createBottomNav();
+	// Нижнее меню
+	const bottomNavHTML = createBottomNav()
 
-  app.innerHTML = tabsHTML + weekdaysHTML + eventsHTML + bottomNavHTML;
-});
+	app.innerHTML = tabsHTML + weekdaysHTML + eventsHTML + bottomNavHTML
+})

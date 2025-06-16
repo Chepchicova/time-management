@@ -1,182 +1,179 @@
 body {
-  margin: 0;
- /* fallback для старых браузеров */
-  font-family: 'Montserrat', Arial, sans-serif;
-  color: #fff;
-  min-width: 375px;
-  max-width: 375px;
-  margin-left: auto;
-  margin-right: auto;
-  /* вставляем псевдоэлемент для градиента */
-  position: relative;
-  overflow: hidden;
+	margin: 0;
+	/* fallback для старых браузеров */
+	font-family: 'Montserrat', Arial, sans-serif;
+	color: #fff;
+	min-width: 375px;
+	max-width: 375px;
+	margin-left: auto;
+	margin-right: auto;
+	/* вставляем псевдоэлемент для градиента */
+	position: relative;
+	overflow: hidden;
 }
 
 /* Добавляем градиент и размытие через псевдоэлемент */
 body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  /* Многоуровневый градиент */
-  background: 
-    radial-gradient(circle at 10% 70%, #276bfd 30%, transparent 80%),
-    radial-gradient(circle at 80% 0%, #b0e4ff 20%, transparent 60%),
-    linear-gradient(120deg, #b0e4ff 0%, #276bfd 40%, #fff 100%);
-  filter: blur(28px);
-  opacity: 0.95;
-  pointer-events: none;
+	content: '';
+	position: fixed;
+	inset: 0;
+	z-index: -1;
+	/* Многоуровневый градиент */
+	background: radial-gradient(circle at 10% 70%, #276bfd 30%, transparent 80%),
+		radial-gradient(circle at 80% 0%, #b0e4ff 20%, transparent 60%),
+		linear-gradient(120deg, #b0e4ff 0%, #276bfd 40%, #fff 100%);
+	filter: blur(28px);
+	opacity: 0.95;
+	pointer-events: none;
 }
 #app {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
 }
 .tabs {
-  display: flex;
-  justify-content: space-between;
-  margin: 24px 16px 16px 16px;
+	display: flex;
+	justify-content: space-between;
+	margin: 24px 16px 16px 16px;
 }
 .tab {
-  flex: 1;
-  padding: 10px 0;
-  margin: 0 5px;
-  border-radius: 20px;
-  background: rgba(0, 13, 112, 0); /* прозрачный фон */
-  color: #ffffff;
-  text-align: center;
-  font-weight: 500;
-  cursor: pointer;
-  border: 2px solid rgb(255, 255, 255); /* светлая полупрозрачная обводка */
-  transition: background 0.2s, border 0.2s, color 0.2s;
+	flex: 1;
+	padding: 10px 0;
+	margin: 0 5px;
+	border-radius: 20px;
+	background: rgba(0, 13, 112, 0); /* прозрачный фон */
+	color: #ffffff;
+	text-align: center;
+	font-weight: 500;
+	cursor: pointer;
+	border: 2px solid rgb(255, 255, 255); /* светлая полупрозрачная обводка */
+	transition: background 0.2s, border 0.2s, color 0.2s;
 }
 
 .tab.active {
-  background: rgba(1, 50, 147, 0.451); /* более тёмный, но прозрачный фон */
-  color: #fff;
-  backdrop-filter: blur(2px);
+	background: rgba(1, 50, 147, 0.451); /* более тёмный, но прозрачный фон */
+	color: #fff;
+	backdrop-filter: blur(2px);
 }
 .weekdays {
-  display: flex;
-  justify-content: space-between;
-  margin: 0 16px 12px 16px;
+	display: flex;
+	justify-content: space-between;
+	margin: 0 16px 12px 16px;
 }
 .weekday {
-  align-items: center;
-  text-align: center;
-  color: #000000;
-  padding: 6px 0;
-  width: 32px;
+	align-items: center;
+	text-align: center;
+	color: #000000;
+	padding: 6px 0;
+	width: 32px;
 }
 .weekday.active {
-  color: #ffffff;
+	color: #ffffff;
 }
 .day-number {
-  display: block;
-  background: #ffffff62;
-  border-radius: 10px;
-  margin-top: 4px;
-  width: 32px;
-  height: 32px;
-  line-height: 32px;
+	display: block;
+	background: #ffffff62;
+	border-radius: 10px;
+	margin-top: 4px;
+	width: 32px;
+	height: 32px;
+	line-height: 32px;
 }
 .day-number.active {
-  background: linear-gradient(90deg, #01005591 0%, #7075ff 100%);
-  color: #fff;
+	background: linear-gradient(90deg, #01005591 0%, #7075ff 100%);
+	color: #fff;
 }
 .events-list {
-  flex: 1;
-  margin: 0 16px;
-  margin-bottom: 80px;
+	flex: 1;
+	margin: 0 16px;
+	margin-bottom: 80px;
 }
 .event-time {
-  font-size: 14px;
-  color: #000000;
-  margin-bottom: 4px;
+	font-size: 14px;
+	color: #000000;
+	margin-bottom: 4px;
 }
 .event-card {
-  background: #ffffff62;
-  border-radius: 18px;
-  margin-bottom: 16px;
-  padding: 16px;
-  position: relative;
-  box-shadow: 0 2px 8px rgba(9, 19, 58, 0.12);
-  display: flex;
-  flex-direction: column;
+	background: #ffffff62;
+	border-radius: 18px;
+	margin-bottom: 16px;
+	padding: 16px;
+	position: relative;
+	box-shadow: 0 2px 8px rgba(9, 19, 58, 0.12);
+	display: flex;
+	flex-direction: column;
 }
 .event-stripe {
-  position: absolute;
-  left: 0;
-  top: 16px;
-  bottom: 16px;
-  width: 4px;
-  border-radius: 2px;
+	position: absolute;
+	left: 0;
+	top: 16px;
+	bottom: 16px;
+	width: 4px;
+	border-radius: 2px;
 }
 .event-title {
-  font-size: 16px;
-  font-weight: 500;
+	font-size: 16px;
+	font-weight: 500;
 }
 .event-hours {
-  font-size: 13px;
-  color:  rgb(1, 50, 147);
-  margin-top: 4px;
+	font-size: 13px;
+	color: rgb(1, 50, 147);
+	margin-top: 4px;
 }
-
 
 .free-slot {
-  background: #24305E;
-  border-radius: 18px;
-  margin-bottom: 16px;
-  padding: 16px;
-  color: #A0A5C1;
-  font-size: 15px;
+	background: #7dc9f8;
+	border-radius: 18px;
+	margin-bottom: 16px;
+	padding: 8px;
+	color: #01030c;
+	font-size: 15px;
 }
 .schedule-btn {
-  background: linear-gradient(90deg, #5F5CFF 0%, #6F74FF 100%);
-  color: #fff;
-  font-weight: 600;
-  border: none;
-  border-radius: 14px;
-  padding: 14px 0;
-  width: 100%;
-  margin-bottom: 12px;
-  font-size: 16px;
-  cursor: pointer;
-  margin-top: 8px;
-  box-shadow: 0 2px 8px rgba(50,60,100,0.16);
+	background: linear-gradient(90deg, #5f5cff 0%, #6f74ff 100%);
+	color: #fff;
+	font-weight: 600;
+	border: none;
+	border-radius: 14px;
+	padding: 14px 0;
+	width: 100%;
+	margin-bottom: 12px;
+	font-size: 16px;
+	cursor: pointer;
+	margin-top: 8px;
+	box-shadow: 0 2px 8px rgba(50, 60, 100, 0.16);
 }
 .bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #232752;
-  width: 375px;
-  display: flex;
-  justify-content: space-between;
-  padding: 12px 32px;
-  border-radius: 22px 22px 0 0;
-  box-shadow: 0 -2px 8px rgba(50,60,100,0.14);
+	position: fixed;
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	background: #232752;
+	width: 95vw;
+	display: flex;
+	justify-content: space-between;
+	padding: 12px 12px;
+	border-radius: 22px 22px 0 0;
+	box-shadow: 0 -2px 8px rgba(50, 60, 100, 0.14);
+	box-sizing: border-box;
 }
 .bottom-nav .nav-btn {
-  background: none;
-  border: none;
-  color: #A0A5C1;
-  font-size: 28px;
-  cursor: pointer;
+	background: none;
+	border: none;
+	color: #a0a5c1;
+	cursor: pointer;
 }
 .bottom-nav .nav-btn.active {
-  color: #5F5CFF;
+	color: #5f5cff;
 }
 .bottom-nav .add-btn {
-  background: linear-gradient(90deg, #5F5CFF 0%, #6F74FF 100%);
-  border: none;
-  color: #fff;
-  font-size: 32px;
-  border-radius: 50%;
-  width: 58px;
-  height: 58px;
-  margin-top: -24px;
-  box-shadow: 0 2px 8px rgba(50,60,100,0.18);
+	background: linear-gradient(90deg, #5f5cff 0%, #6f74ff 100%);
+	border: none;
+	color: #fff;
+	font-size: 32px;
+	border-radius: 50%;
+	width: 58px;
+	height: 58px;
+	margin-top: -24px;
+	box-shadow: 0 2px 8px rgba(50, 60, 100, 0.18);
 }
