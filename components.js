@@ -69,11 +69,11 @@ function createEventsList(events) {
 
 function createBottomNav() {
 	return `<div class="bottom-nav">
-    <button class="nav-btn active"><img src="/assets/people2.png" /></button>
-    <button class="nav-btn"><img src="/assets/calendar.png"  /></button>
+    <button class="nav-btn active"><img src="/assets/profile2.svg" /></button>
+    <button class="nav-btn"><img src="/assets/calendar1.svg"  /></button>
     <button class="add-btn">+</button>
-    <button class="nav-btn"><img src="/assets/notes.png"  /></button>
-    <button class="nav-btn"><img src="/assets/profile.png"  /></button>
+    <button class="nav-btn"><img src="/assets/notes1.svg"  /></button>
+    <button class="nav-btn"><img src="/assets/profile1.svg"  /></button>
   </div>`
 }
 
