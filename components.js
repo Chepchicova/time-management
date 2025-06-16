@@ -32,13 +32,39 @@ function createEventCard(event) {
 }
 
 function createEventsList(events) {
-	return `<div class="events-list">
-    ${events
-			.map(
-				e => `<div class="event-time">${e.timeStart}</div>${createEventCard(e)}`
+	// Сначала сортируем события по времени начала
+	const sortedEvents = [...events].sort((a, b) => {
+		return a.timeStart.localeCompare(b.timeStart)
+	})
+
+	let resultHtml = '<div class="events-list">'
+
+	for (let i = 0; i < sortedEvents.length; i++) {
+		const currentEvent = sortedEvents[i]
+
+		// Добавляем текущее событие
+		resultHtml += `<div class="event-time">${
+			currentEvent.timeStart
+		}</div>${createEventCard(currentEvent)}`
+
+		// Проверяем разрыв с следующим событием (если оно есть)
+		if (i < sortedEvents.length - 1) {
+			const nextEvent = sortedEvents[i + 1]
+			const timeDiff = getTimeDifferenceInMinutes(
+				currentEvent.timeEnd,
+				nextEvent.timeStart
 			)
-			.join('')}
-  </div>`
+
+			if (timeDiff >= 60) {
+				resultHtml += `<div class="event-time">${currentEvent.timeEnd}</div>
+				<div class="free-slot">Свободное время: 
+				${currentEvent.timeEnd} - ${nextEvent.timeStart}</div>`
+			}
+		}
+	}
+
+	resultHtml += '</div>'
+	return resultHtml
 }
 
 function createBottomNav() {
@@ -49,4 +75,14 @@ function createBottomNav() {
     <button class="nav-btn"><img src="/assets/notes1.svg"  /></button>
     <button class="nav-btn"><img src="/assets/profile1.svg"  /></button>
   </div>`
+}
+
+function getTimeDifferenceInMinutes(endTime, startTime) {
+	const [endHours, endMins] = endTime.split(':').map(Number)
+	const [startHours, startMins] = startTime.split(':').map(Number)
+
+	const endTotal = endHours * 60 + endMins
+	const startTotal = startHours * 60 + startMins
+
+	return startTotal - endTotal // Разница в минутах
 }

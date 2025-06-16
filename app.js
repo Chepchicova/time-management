@@ -12,11 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	const weekdaysHTML = createWeekdays(weekDays, 3)
 
 	// События
-	events.sort((a, b) => {
-		if (a.timeStart > b.timeStart) return 1
-		if (a.timeStart < b.timeStart) return -1
-		return 0
-	})
+	// events.sort((a, b) => {
+	// 	if (a.timeStart > b.timeStart) return 1
+	// 	if (a.timeStart < b.timeStart) return -1
+	// 	return 0
+	// })
+
 	const eventsHTML = createEventsList(events)
 
 	// Нижнее меню
