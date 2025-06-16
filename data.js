@@ -24,7 +24,8 @@ const events = [
     time: "11:45 AM – 12:30 AM",
     start: "11:45",
     color: "#D36AC2"
-  },
+  }, 
+
   {
     id: 3,
     title: "Large free slot",
@@ -33,6 +34,7 @@ const events = [
     color: "#4E93FF",
     free: true
   },
+  
   {
     id: 4,
     title: "Meeting with investors",

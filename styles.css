@@ -124,14 +124,7 @@ body::before {
 }
 
 
-.free-slot {
-  background: #24305E;
-  border-radius: 18px;
-  margin-bottom: 16px;
-  padding: 16px;
-  color: #A0A5C1;
-  font-size: 15px;
-}
+
 .schedule-btn {
   background: linear-gradient(90deg, #5F5CFF 0%, #6F74FF 100%);
   color: #fff;
