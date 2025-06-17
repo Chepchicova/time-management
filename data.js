@@ -52,7 +52,7 @@ const events = [
 
 // для месяца 
 const monthEvents = {
-  25: [
+  18: [
     {
       title: "2705 Инвестиро",
       timeStart: "08:00",
