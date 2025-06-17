@@ -11,15 +11,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// Нижнее меню
 	const bottomNavHTML = createBottomNav()
-	// Неделя
-	const weekdaysHTML = createWeekdays()
+	const modalHTML = createModal()
 
-	app.innerHTML = tabsHTML + contentHTML + bottomNavHTML
+	app.innerHTML = tabsHTML + contentHTML + bottomNavHTML + modalHTML
 
 	// Функция для отображения недельного вида
 	function showWeekView() {
 		const content = document.getElementById('content')
-		content.innerHTML = createWeekdays(weekDays, 3) + createEventsList(events)
+		content.innerHTML = createWeekdays() + createEventsList(events)
 	}
 
 	// Функция для отображения месячного вида
@@ -73,8 +72,5 @@ document.addEventListener('DOMContentLoaded', () => {
 			showWeekView()
 		}
 	})
-	const modalHTML = createModal()
-
-	app.innerHTML =
-		tabsHTML + weekdaysHTML + eventsHTML + bottomNavHTML + modalHTML
+	setupEventModal()
 })

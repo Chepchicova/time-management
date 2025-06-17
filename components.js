@@ -227,6 +227,7 @@ function createMonthView(date = new Date(), eventsByDay = {}) {
 	const todayDay = isCurrentMonth ? today.getDate() : null
 
 	let html = `<div class="month-list">`
+
 	for (let day = 1; day <= daysInMonth; day++) {
 		const dayDate = new Date(year, month, day)
 		const weekDayStr = weekDays[dayDate.getDay()]
@@ -314,5 +315,3 @@ function setupEventModal() {
 		form.reset()
 	})
 }
-
-document.addEventListener('DOMContentLoaded', setupEventModal)

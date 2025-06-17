@@ -66,9 +66,14 @@ body::before {
 	color: #000000;
 	padding: 6px 0;
 	width: 32px;
+	cursor: pointer;
 }
 .weekday.active {
 	color: #ffffff;
+	.day-number {
+		background: linear-gradient(90deg, #01005591 0%, #7075ff 100%);
+		color: #fff;
+	}
 }
 .day-number {
 	display: block;
@@ -78,11 +83,9 @@ body::before {
 	width: 32px;
 	height: 32px;
 	line-height: 32px;
+	cursor: pointer;
 }
-.day-number.active {
-	background: linear-gradient(90deg, #01005591 0%, #7075ff 100%);
-	color: #fff;
-}
+
 .events-list {
 	flex: 1;
 	margin: 0 16px;
@@ -186,6 +189,7 @@ body::before {
 	color: #5f5cff;
 }
 .bottom-nav .add-btn {
+	cursor: pointer;
 	background: linear-gradient(90deg, #2826ae 0%, #6557f8 100%);
 	border: none;
 	color: #fff;
