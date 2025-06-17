@@ -1,27 +1,62 @@
-// Основная логика приложения (позже можно заменить данные на реальные из БД)
-
 document.addEventListener('DOMContentLoaded', () => {
-	const app = document.getElementById('app')
+    const app = document.getElementById('app');
 
-	// Верхние вкладки
-	const tabsHTML = `<div class="tabs">
-    ${['Day', 'Week', 'Month'].map((t, i) => createTab(t, i === 1)).join('')}
-  </div>`
+    const tabsHTML = `<div class="tabs">
+        ${['Week', 'Month'].map((tab, i) => `<div class="tab">${tab}</div>`).join('')}
+    </div>`;
 
-	// Неделя
-	const weekdaysHTML = createWeekdays(weekDays, 3)
+    const contentHTML = `<div id="content"></div>`;
 
-	// События
-	// events.sort((a, b) => {
-	// 	if (a.timeStart > b.timeStart) return 1
-	// 	if (a.timeStart < b.timeStart) return -1
-	// 	return 0
-	// })
+    // Нижнее меню
+    const bottomNavHTML = createBottomNav();
 
-	const eventsHTML = createEventsList(events)
+    app.innerHTML = tabsHTML + contentHTML + bottomNavHTML;
 
-	// Нижнее меню
-	const bottomNavHTML = createBottomNav()
+    // Функция для отображения недельного вида
+    function showWeekView() {
+        const content = document.getElementById('content');
+        content.innerHTML = createWeekdays(weekDays, 3) + createEventsList(events);
+    }
 
-	app.innerHTML = tabsHTML + weekdaysHTML + eventsHTML + bottomNavHTML
-})
+    // Функция для отображения месячного вида
+    function showMonthView() {
+        const content = document.getElementById('content');
+        content.innerHTML = createMonthView(new Date(), monthEvents);
+    }
+
+    // Обработчики для вкладок
+    document.querySelectorAll('.tab').forEach((tab, index) => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            if (index === 0) {
+                showWeekView();
+                window.history.pushState({view: 'week'}, '', '#week');
+            } else {
+                showMonthView();
+                window.history.pushState({view: 'month'}, '', '#month');
+            }
+        });
+    });
+
+    // Инициализация при загрузке
+    if (window.location.hash === '#month') {
+        document.querySelectorAll('.tab')[1].classList.add('active');
+        showMonthView();
+    } else {
+        document.querySelectorAll('.tab')[0].classList.add('active');
+        showWeekView();
+    }
+
+    window.addEventListener('popstate', (e) => {
+        if (window.location.hash === '#month') {
+            document.querySelectorAll('.tab')[1].classList.add('active');
+            document.querySelectorAll('.tab')[0].classList.remove('active');
+            showMonthView();
+        } else {
+            document.querySelectorAll('.tab')[0].classList.add('active');
+            document.querySelectorAll('.tab')[1].classList.remove('active');
+            showWeekView();
+        }
+    });
+});

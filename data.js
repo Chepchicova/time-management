@@ -49,3 +49,48 @@ const events = [
 		theme: EventThemes.HEALTH,
 	},
 ]
+
+// для месяца 
+const monthEvents = {
+  25: [
+    {
+      title: "2705 Инвестиро",
+      timeStart: "08:00",
+      timeEnd: "09:45",
+      theme: { color: "#B2E0FF" }
+    },
+    {
+      title: "2705 Биржи",
+      timeStart: "09:45",
+      timeEnd: "10:30",
+      theme: { color: "#B2E0FF" }
+    },
+    {
+      title: "Купить",
+      timeStart: "12:00",
+      timeEnd: "13:00",
+      theme: { color: "#E8FFB2" }
+    },
+    {
+      title: "Дайджест приложений",
+      timeStart: "18:00",
+      timeEnd: "19:00",
+      theme: { color: "#D6E5FF" }
+    }
+  ],
+  26: [
+    {
+      title: "Кураторский час",
+      timeStart: "15:00",
+      timeEnd: "16:00",
+      theme: { color: "#B2C9FF" }
+    },
+    {
+      title: "Временно бесплатно",
+      timeStart: "18:00",
+      timeEnd: "19:00",
+      theme: { color: "#A0E9FF" }
+    }
+  ],
+  // и так далее...
+};
