@@ -72,7 +72,7 @@ const monthEvents = {
       theme: { color: "#E8FFB2" }
     },
     {
-      title: "Дайджест приложений",
+      title: "Дайджест приложений ловфлоафпдовпад лофвполаофыпваорпфова рпдорвыа",
       timeStart: "18:00",
       timeEnd: "19:00",
       theme: { color: "#D6E5FF" }

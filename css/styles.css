@@ -200,11 +200,14 @@ body::before {
 /**/
 
 #content {
-  flex: 1;
-  min-height: 0;
-  max-height: calc(100vh - 130px); /* корректируй по высоте шапки/подвала */
+  max-height: calc(100vh - 130px); 
   overflow-y: auto;
+    /* минус полоса прокрутки */
+  scrollbar-width: none;
 }
+
+
+
 
 .month-list {
   display: flex;
@@ -214,10 +217,12 @@ body::before {
 }
 
 .month-row {
+	  min-height: 60px; /* увеличена высота строки */
+  align-items: center;
   display: flex;
   border-bottom: 1px solid #e4e4e451;
-  min-height: 45px;
-  align-items: flex-start;
+
+
   padding: 0.2em 0;
   background: rgba(255,255,255,0.08);
   border-radius: 7px;
@@ -258,28 +263,35 @@ body::before {
   padding: 4px 0;
   overflow-x: auto;
   white-space: nowrap;
+    scrollbar-width: none;
+
 }
 
 .month-event {
-  min-width: 65px;
-  min-height: 30px;
-  border-radius: 6px;
-  margin-right: 7px;
-  margin-bottom: 2px;
-  padding: 2px 7px;
-  display: inline-block;
+  min-width: 120px;
+  max-width: 145px;
+  min-height: 60px;
+  height: 60px;
+  padding: 11px 12px 11px 13px;
+  border-radius: 8px;
+  display: flex;
   flex-direction: column;
   align-items: flex-start;
-  font-size: 12px;
+  justify-content: center;
+  font-size: 13px;
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
   color: #0d2047;
-  box-shadow: 0 1px 3px rgba(60,80,120,0.08);
-  border: 1px solid #e3eefe;
-  background: #e6f0ff;
 }
 .month-event-title {
-  font-size: 12px;
+  width: 100%;
+  font-size: 13px;
   font-weight: 500;
   margin-bottom: 2px;
+  color: #0d2047;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .month-event-time {
   font-size: 11px;
@@ -290,93 +302,11 @@ body::before {
   font-size: 13px;
   padding: 3px 7px;
 }
-
-/*
-.month-header {
-    text-align: center;
-    margin: 16px 0;
-    color: #000;
+.month-row.today {
+  background: linear-gradient(90deg, #ffe689 0%, #fffbe7 100%) !important;
+  border-left: 4px solid #ffd04a;
+  box-shadow: 0 2px 12px rgba(255,208,74,0.14);
 }
-
-.month-header h2 {
-    font-size: 20px;
-    font-weight: 600;
-    margin: 0;
+.month-row.today .month-day-num {
+  color: #fcb900 !important;
 }
-
-.month-table {
-    margin: 0 16px;
-    border-radius: 12px;
-    overflow: hidden;
-    background: rgba(255, 255, 255, 0.7);
-    box-shadow: 0 2px 8px rgba(9, 19, 58, 0.12);
-}
-
-.month-row {
-    display: grid;
-    grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.month-row.header {
-    background: rgba(1, 50, 147, 0.2);
-    font-weight: 500;
-}
-
-.month-row.today .day-info {
-    background: linear-gradient(90deg, #01005591 0%, #7075ff 100%);
-    color: #fff;
-}
-
-.month-row.today .day-number {
-    color: #fff;
-}
-
-.month-cell {
-    padding: 8px;
-    min-height: 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.month-cell.day-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.5);
-}
-
-.day-of-week {
-    font-size: 12px;
-    color: #666;
-}
-
-.day-number {
-    font-size: 16px;
-    font-weight: 500;
-    color: #000;
-}
-
-.event-cell {
-    border-left: 1px solid rgba(0, 0, 0, 0.1);
-    font-size: 13px;
-}
-
-.event-time {
-    font-weight: 500;
-    color: #000;
-}
-
-.event-duration {
-    color: #666;
-    font-size: 12px;
-    margin-top: 2px;
-}
-
-//Последняя строка без границы 
-.month-row:last-child {
-    border-bottom: none;
-}
-*/

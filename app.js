@@ -22,6 +22,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function showMonthView() {
         const content = document.getElementById('content');
         content.innerHTML = createMonthView(new Date(), monthEvents);
+
+        // Автопрокрутка к сегодняшнему дню (если есть)
+        setTimeout(() => {
+          const todayRow = document.getElementById('today-row');
+          if (todayRow) {
+            todayRow.scrollIntoView({ block: 'center', behavior: 'smooth' });
+          }
+        }, 100);
     }
 
     // Обработчики для вкладок
