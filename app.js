@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>`
 
 	// Неделя
-	const weekdaysHTML = createWeekdays(weekDays, 3)
+	const weekdaysHTML = createWeekdays()
 
 	const eventsHTML = createEventsList(events)
 
