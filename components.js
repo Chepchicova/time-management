@@ -30,7 +30,6 @@ function getCurrentWeekDays() {
 	const daysShort = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
 	const today = new Date()
 	const currentDateString = formatDate(today)
-
 	// Находим понедельник текущей недели
 	const monday = new Date(today)
 	monday.setDate(
@@ -98,9 +97,10 @@ function createEventsList(events, filterDate = null) {
 	const filteredEvents = filterDate
 		? events.filter(event => event.date === filterDate)
 		: events
+	console.log(filterDate)
 
 	if (filteredEvents.length === 0) {
-		return `<div class="no-events">На этот день событий нет</div>`
+		return `<div class="events-list" id="eventsContainer">На этот день событий нет</div>`
 	}
 
 	// Сортировка по времени начала
@@ -214,7 +214,7 @@ function getTimeDifferenceInMinutes(endTime, startTime) {
 
 // месяц
 
-function createMonthView(date = new Date(), eventsByDay = {}) {
+function createMonthView(date = new Date(), events = []) {
 	const year = date.getFullYear()
 	const month = date.getMonth()
 	const daysInMonth = new Date(year, month + 1, 0).getDate()
@@ -225,6 +225,19 @@ function createMonthView(date = new Date(), eventsByDay = {}) {
 	const isCurrentMonth =
 		today.getFullYear() === year && today.getMonth() === month
 	const todayDay = isCurrentMonth ? today.getDate() : null
+
+	// Группируем события по дням месяца
+	const eventsByDay = {}
+	events.forEach(event => {
+		const eventDate = new Date(event.date)
+		if (eventDate.getFullYear() === year && eventDate.getMonth() === month) {
+			const day = eventDate.getDate()
+			if (!eventsByDay[day]) {
+				eventsByDay[day] = []
+			}
+			eventsByDay[day].push(event)
+		}
+	})
 
 	let html = `<div class="month-list">`
 
@@ -237,33 +250,35 @@ function createMonthView(date = new Date(), eventsByDay = {}) {
 		html += `<div class="month-row${isToday ? ' today' : ''}"${
 			isToday ? ' id="today-row"' : ''
 		}>
-      <div class="month-day">
-        <span class="month-day-week">${weekDayStr}</span>
-        <span class="month-day-num">${day}</span>
-      </div>
-      <div class="month-events">
-        ${
-					dayEvents.length === 0
-						? ``
-						: dayEvents
-								.map(
-									ev => `
-          <div class="month-event" style="background:${ev.theme.color}">
-            <div class="month-event-title">${ev.title}</div>
-            <div class="month-event-time">${ev.timeStart}${
-										ev.timeEnd ? '–' + ev.timeEnd : ''
-									}</div>
-          </div>
-        `
-								)
-								.join('')
-				}
-      </div>
-    </div>`
+		 <div class="month-day">
+			<span class="month-day-week">${weekDayStr}</span>
+			<span class="month-day-num">${day}</span>
+		 </div>
+		 <div class="month-events">
+			${
+				dayEvents.length === 0
+					? ``
+					: dayEvents
+							.map(
+								event => `
+					  <div class="month-event" style="background:${event.theme.color}">
+						 <div class="month-event-title">${event.title}</div>
+						 <div class="month-event-time">${event.timeStart}${
+									event.timeEnd ? '–' + event.timeEnd : ''
+								}</div>
+					  </div>
+					`
+							)
+							.join('')
+			}
+		 </div>
+	  </div>`
 	}
+
 	html += `</div>`
 	return html
 }
+
 function createBottomNav() {
 	return `<div class="bottom-nav">
 	  <button class="nav-btn active"><img src="/assets/profile2.svg" /></button>

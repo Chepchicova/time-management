@@ -18,13 +18,14 @@ document.addEventListener('DOMContentLoaded', () => {
 	// Функция для отображения недельного вида
 	function showWeekView() {
 		const content = document.getElementById('content')
-		content.innerHTML = createWeekdays() + createEventsList(events)
+		content.innerHTML =
+			createWeekdays() + createEventsList(events, formatDate(new Date()))
 	}
 
 	// Функция для отображения месячного вида
 	function showMonthView() {
 		const content = document.getElementById('content')
-		content.innerHTML = createMonthView(new Date(), monthEvents)
+		content.innerHTML = createMonthView(new Date(), events)
 
 		// Автопрокрутка к сегодняшнему дню (если есть)
 		setTimeout(() => {
@@ -72,5 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
 			showWeekView()
 		}
 	})
+
 	setupEventModal()
 })
