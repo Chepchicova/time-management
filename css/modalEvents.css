@@ -18,10 +18,10 @@
 
 .close-btn {
 	position: absolute;
-	top: 10px;
-	right: 10px;
+	top: 3px;
+	right: 8px;
 	font-size: 20px;
-	color: #ff0000;
+	color: rgb(0, 24, 86);
 	cursor: pointer;
 	background: none;
 	border: none;
@@ -81,4 +81,75 @@ button[type='submit'] {
 	border: none;
 	border-radius: 8px;
 	cursor: pointer;
+}
+.modal {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+.modal-content {
+  background: rgba(227, 233, 255, 0.95);
+  border-radius: 16px;
+  padding: 16px;
+  width: 100%;
+  max-width: 300px; /* Значительно уменьшена ширина */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.checkbox-wrapper input[type="checkbox"] {
+  width: 14px;
+}
+
+.modal h2 {
+  margin: 0 0 12px 0;
+  font-size: 18px;
+  text-align: center;
+  color: #001856;
+}
+
+.form-group {
+  margin-bottom: 12px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 13px;
+  color: #001856;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #cfdced;
+  border-radius: 8px;
+  font-size: 13px;
+  box-sizing: border-box;
+    color: #515151;
+	  background: rgba(238, 242, 255, 0.538);
+}
+
+.time-group {
+  display: flex;
+  gap: 8px;
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: inline;
+  font-size: 13px;
+}
+
+/* Анимация */
+@keyframes modalFadeIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.modal-content {
+  animation: modalFadeIn 0.2s ease-out forwards;
 }
