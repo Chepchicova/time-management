@@ -173,10 +173,12 @@ function createModal() {
 			  <input type="text" id="eventPerson">
 			</div>
 			
-			<div class="form-group checkbox-group">
-			  <input type="checkbox" id="eventNotification">
-			  <label for="eventNotification">Оповещение</label>
-			</div>
+<div class="form-group">
+  <label class="checkbox-wrapper">
+    <input type="checkbox" id="eventNotification">
+    <span>Оповещение</span>
+  </label>
+</div>
 			
 			<div class="form-group">
 			  <label for="eventTheme">Тема:</label>
