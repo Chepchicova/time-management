@@ -204,6 +204,7 @@ function createModal() {
 	`
 }
 
+
 function getTimeDifferenceInMinutes(endTime, startTime) {
 	const [endHours, endMins] = endTime.split(':').map(Number)
 	const [startHours, startMins] = startTime.split(':').map(Number)
@@ -211,7 +212,7 @@ function getTimeDifferenceInMinutes(endTime, startTime) {
 	const endTotal = endHours * 60 + endMins
 	const startTotal = startHours * 60 + startMins
 
-	return startTotal - endTotal // Разница в минутах
+	return startTotal - endTotal 
 }
 
 // месяц

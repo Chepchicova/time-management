@@ -9,7 +9,7 @@
 
 .modal-content {
 	position: relative;
-	background: #fff;
+	background: #ffd56a;
 	border-radius: 12px;
 	padding: 24px;
 	width: min(90%, 400px);
@@ -152,4 +152,49 @@ button[type='submit'] {
 
 .modal-content {
   animation: modalFadeIn 0.2s ease-out forwards;
+}
+
+/* Стили для select */
+#eventTheme {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #cfdced;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #515151;
+  background: rgba(238, 242, 255, 0.538);
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23515151'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px;
+}
+
+#eventTheme option {
+  color: #000 !important; 
+  padding: 8px;
+}
+
+#eventTheme option[value="WORK"] {
+  background-color: rgba(255, 164, 164, 0.72);
+}
+#eventTheme option[value="PERSONAL"] {
+  background-color: rgba(255, 211, 180, 0.72);
+}
+#eventTheme option[value="MEETING"] {
+  background-color: rgba(255, 251, 180, 0.72);
+}
+#eventTheme option[value="HEALTH"] {
+  background-color: rgba(255, 180, 249, 0.72);
+}
+#eventTheme option[value="EDUCATION"] {
+  background-color: rgba(180, 255, 186, 0.72);
+}
+#eventTheme option[value="OTHER"] {
+  background-color: rgba(155, 155, 155, 0.72);
+}
+
+#eventTheme {
+  color: #515151; 
 }

@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	const app = document.getElementById('app')
 
 	const tabsHTML = `<div class="tabs">
-        ${['Week', 'Month']
+        ${['Неделя', 'Месяц']
 					.map((tab, i) => `<div class="tab">${tab}</div>`)
 					.join('')}
     </div>`
@@ -76,3 +76,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	setupEventModal()
 })
+
+// Добавьте этот код после создания модального окна
+document.getElementById('eventForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  validateForm();
+});
+
+// Инициализация валидации при изменении полей
+document.getElementById('eventTitle').addEventListener('input', validateTitle);
+document.getElementById('eventDate').addEventListener('change', validateDate);
+// ... и так для всех полей
+
