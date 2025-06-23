@@ -1,10 +1,44 @@
 const EventThemes = {
-	WORK: { color: '#4E93FF' },
-	PERSONAL: { color: '#E91E63' },
-	MEETING: { color: '#A47AFF' },
-	HEALTH: { color: '#4CAF50' },
-	EDUCATION: { color: '#9C27B0' },
-	OTHER: { color: '#CCCCC' },
+	WORK: {
+		name: 'Работа',
+		color: '#4E93FF',
+		icon: '/assets/theme_icons/work.svg',
+	},
+	PERSONAL: {
+		name: 'Личное',
+		color: '#E91E63',
+		icon: '/assets/theme_icons/personal.svg',
+	},
+	MEETING: {
+		name: 'Встречи',
+		color: '#A47AFF',
+		icon: '/assets/theme_icons/meeting.svg',
+	},
+	SPORT: {
+		name: 'Спорт',
+		color: '#4CAF50',
+		icon: '/assets/theme_icons/sport.svg',
+	},
+	HEALTH: {
+		name: 'Здоровье',
+		color: '#4CAF50',
+		icon: '/assets/theme_icons/health.svg',
+	},
+	EDUCATION: {
+		name: 'Учеба',
+		color: '#9C27B0',
+		icon: '/assets/theme_icons/education.svg',
+	},
+	HOLYDAYS: {
+		name: 'Праздники',
+		color: '#9C27B0',
+		icon: '/assets/theme_icons/holydays.svg',
+	},
+	OTHER: {
+		name: 'Другое',
+		color: '#CCCCC',
+		icon: '/assets/theme_icons/other.svg',
+	},
 }
 
 const events = [
@@ -39,9 +73,9 @@ const events = [
 	{
 		id: 3,
 		title: 'Совещание с разработчиками',
-		date: '2023-06-23', // Формат YYYY-MM-DD
-		timeStart: '15:00', // Формат HH:MM (24h)
-		timeEnd: '16:30', // Формат HH:MM (24h)
+		date: '2025-06-23',
+		timeStart: '15:00',
+		timeEnd: '16:30',
 		person: {
 			id: 101,
 			name: 'Иван Петров',
