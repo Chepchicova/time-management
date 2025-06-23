@@ -75,4 +75,21 @@ document.addEventListener('DOMContentLoaded', () => {
 	})
 
 	setupEventModal()
+
+	document.addEventListener('click', function (e) {
+		const btn = e.target.closest('.event-notification-btn')
+
+		if (btn) {
+			const eventId = btn.dataset.eventId
+			const event = events.find(e => e.id === parseInt(eventId))
+			console.log(event)
+			if (event) {
+				event.notification = !event.notification
+				const icon = btn.querySelector('img')
+				icon.src = event.notification
+					? 'assets/notification-on.svg'
+					: 'assets/notification-off.svg'
+			}
+		}
+	})
 })

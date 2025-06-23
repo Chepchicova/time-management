@@ -85,10 +85,29 @@ function updateActiveDay(selectedDate) {
 //////////////события
 
 function createEventCard(event) {
+	const notificationIcon = event.notification
+		? 'assets/notification-on.svg'
+		: 'assets/notification-off.svg'
+
 	return `<div class="event-card" data-event-id="${event.id}">
 	  <div class="event-stripe" style="background:${event.theme.color};"></div>
-	  <div class="event-title">${event.title}</div>
-	  <div class="event-hours">${event.timeStart}-${event.timeEnd}</div>
+	  <div class="event-content">
+		 <div class="event-info">
+			<div class="event-title">${event.title}</div>
+			<div class="event-hours">${event.timeStart}-${event.timeEnd}</div>
+		 </div>
+		 <div class="event-actions">
+			<button class="event-action-btn event-notification-btn" title="Уведомление" data-event-id="${event.id}">
+			  <img src="${notificationIcon}" alt="Уведомление" class="notification-icon">
+			</button>
+			<button class="event-action-btn event-note-btn"  title="Добавить заметку">
+			  <img src="assets/notes.svg" alt="Заметка">
+			</button>
+			<div class="event-theme-icon" style="background:${event.theme.color};">
+			  <img src=${event.theme.icon} alt="Тема">
+			</div>
+		 </div>
+	  </div>
 	</div>`
 }
 
