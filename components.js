@@ -139,71 +139,6 @@ function createEventsList(events, filterDate = null) {
 	return html
 }
 
-function createModal() {
-	return `
-	 <div class="modal" id="eventModal" style="display: none;">
-	  <div class="modal-content">
-		 <span class="close-btn">&times;</span>
-		 <h2>Добавить событие</h2>
-		 <form id="eventForm">
-			<div class="form-group">
-			  <label for="eventTitle">Название:</label>
-			  <input type="text" id="eventTitle" required>
-			</div>
-			
-			<div class="form-group">
-			  <label for="eventDate">Дата:</label>
-			  <input type="date" id="eventDate" required>
-			</div>
-			
-			<div class="time-group">
-			  <div class="form-group">
-				 <label for="startTime">Начало:</label>
-				 <input type="time" id="startTime" required>
-			  </div>
-			  
-			  <div class="form-group">
-				 <label for="endTime">Конец:</label>
-				 <input type="time" id="endTime" required>
-			  </div>
-			</div>
-			
-			<div class="form-group">
-			  <label for="eventPerson">Человек:</label>
-			  <input type="text" id="eventPerson">
-			</div>
-			
-<div class="form-group">
-  <label class="checkbox-wrapper">
-    <input type="checkbox" id="eventNotification">
-    <span>Оповещение</span>
-  </label>
-</div>
-			
-			<div class="form-group">
-			  <label for="eventTheme">Тема:</label>
-			  <select id="eventTheme" required>
-				 ${Object.entries(EventThemes)
-						.map(
-							([key, value]) =>
-								`<option value="${key}" style="color: ${value.color}">${key}</option>`
-						)
-						.join('')}
-			  </select>
-			</div>
-			
-			<div class="form-group">
-			  <label for="eventDescription">Описание:</label>
-			  <textarea id="eventDescription" rows="3"></textarea>
-			</div>
-			
-			<button type="submit" class="submit-btn">Создать</button>
-		 </form>
-	  </div>
-	</div>
-	`
-}
-
 function getTimeDifferenceInMinutes(endTime, startTime) {
 	const [endHours, endMins] = endTime.split(':').map(Number)
 	const [startHours, startMins] = startTime.split(':').map(Number)
@@ -283,13 +218,93 @@ function createMonthView(date = new Date(), events = []) {
 
 function createBottomNav() {
 	return `<div class="bottom-nav">
-	  <button class="nav-btn active"><img src="/assets/profile2.svg" /></button>
-	  <button class="nav-btn"><img src="/assets/calendar1.svg" /></button>
+	  <button class="nav-btn active"><img src="/assets/contacts.svg" /></button>
+	  <button class="nav-btn"><img src="/assets/calendar.svg" /></button>
 	  <button class="add-btn" id="openModalBtn">+</button>
-	  <button class="nav-btn"><img src="/assets/notes1.svg" /></button>
-	  <button class="nav-btn"><img src="/assets/profile1.svg" /></button>
+	  <button class="nav-btn"><img src="/assets/notes.svg" /></button>
+	  <button class="nav-btn"><img src="/assets/profile.svg" /></button>
 	</div>
 	`
+}
+function createModal() {
+	// Получаем текущую дату в формате YYYY-MM-DD
+	const today = new Date()
+	const todayStr = today.toISOString().split('T')[0]
+
+	return `
+	 <div class="modal" id="eventModal" style="display: none;">
+	  <div class="modal-content">
+		<span class="close-btn">&times;</span>
+		<h2>Добавить событие</h2>
+		<form id="eventForm">
+		 <div class="form-group">
+			<label for="eventTitle">Название:</label>
+			<input type="text" id="eventTitle" required maxlength="50">
+			<small class="error-message" id="titleError" style="color: red; display: none;">Максимум 50 символов</small>
+		 </div>
+		 
+		 <div class="form-group">
+			<label for="eventDate">Дата:</label>
+			<input type="date" id="eventDate" required min="${todayStr}" value="${todayStr}">
+			<small class="error-message" id="dateError" style="color: red; display: none;">Дата не может быть раньше сегодняшней</small>
+		 </div>
+		 
+		 <div class="time-group">
+			<div class="form-group">
+			 <label for="startTime">Начало:</label>
+			 <input type="time" id="startTime" required>
+			</div>
+			
+			<div class="form-group">
+			 <label for="endTime">Конец:</label>
+			 <input type="time" id="endTime" required>
+			 <small class="error-message" id="timeError" style="color: red; display: none;">Время окончания должно быть позже начала</small>
+			</div>
+		 </div>
+		 
+		 <div class="form-group">
+			<label for="eventPerson">Человек:</label>
+			<input type="text" id="eventPerson">
+		 </div>
+		 
+		 <div class="form-group">
+			<label class="checkbox-wrapper">
+			  <input type="checkbox" id="eventNotification">
+			  <span>Оповещение</span>
+			</label>
+		 </div>
+		 
+		 <div class="form-group">
+			<label for="eventTheme">Тема:</label>
+			<select id="eventTheme" required>
+			 ${Object.entries(EventThemes)
+					.map(
+						([key, value]) =>
+							`<option value="${key}" style="color: ${value.color}">${key}</option>`
+					)
+					.join('')}
+			</select>
+		 </div>
+		 
+		 <div class="form-group">
+			<label for="eventDescription">Описание:</label>
+			<textarea id="eventDescription" rows="3"></textarea>
+		 </div>
+		 
+		 <button type="submit" class="submit-btn">Создать</button>
+		</form>
+	  </div>
+	</div>
+	`
+}
+
+function getThemeByName(theme) {
+	for (const key in EventThemes) {
+		if (key === theme) {
+			return EventThemes[key]
+		}
+	}
+	return EventThemes.OTHER
 }
 
 // После добавления HTML в DOM нужно добавить обработчики:
@@ -300,35 +315,88 @@ function setupEventModal() {
 	const form = document.getElementById('eventForm')
 
 	openBtn.addEventListener('click', () => {
+		// При открытии модального окна устанавливаем текущую дату
+		const today = new Date()
+		const todayStr = today.toISOString().split('T')[0]
+		document.getElementById('eventDate').value = todayStr
 		modal.style.display = 'block'
 	})
 
 	closeBtn.addEventListener('click', () => {
 		modal.style.display = 'none'
+		// Сбрасываем ошибки при закрытии
+		resetErrors()
 	})
 
 	window.addEventListener('click', e => {
 		if (e.target === modal) {
 			modal.style.display = 'none'
+			resetErrors()
 		}
 	})
 
+	// Валидация формы
 	form.addEventListener('submit', e => {
 		e.preventDefault()
 
+		// Сбрасываем предыдущие ошибки
+		resetErrors()
+
+		const title = document.getElementById('eventTitle')
+		const date = document.getElementById('eventDate')
+		const startTime = document.getElementById('startTime')
+		const endTime = document.getElementById('endTime')
+
+		let isValid = true
+
+		// Проверка заголовка (максимум 50 символов)
+		if (title.value.length > 50) {
+			document.getElementById('titleError').style.display = 'block'
+			isValid = false
+		}
+
+		// Проверка даты (не раньше сегодня)
+		const today = new Date()
+		today.setHours(0, 0, 0, 0)
+		const selectedDate = new Date(date.value)
+		if (selectedDate < today) {
+			document.getElementById('dateError').style.display = 'block'
+			isValid = false
+		}
+
+		// Проверка времени (конец не раньше начала)
+		if (startTime.value && endTime.value && startTime.value >= endTime.value) {
+			document.getElementById('timeError').style.display = 'block'
+			isValid = false
+		}
+
+		// Если валидация не прошла, не отправляем форму
+		if (!isValid) return
+
+		// Если все в порядке, создаем событие
 		const newEvent = {
-			title: document.getElementById('eventTitle').value,
-			date: document.getElementById('eventDate').value,
-			timeStart: document.getElementById('startTime').value,
-			timeEnd: document.getElementById('endTime').value,
+			title: title.value,
+			date: date.value,
+			timeStart: startTime.value,
+			timeEnd: endTime.value,
 			person: document.getElementById('eventPerson').value,
 			notification: document.getElementById('eventNotification').checked,
-			theme: document.getElementById('eventTheme').value,
+			theme: getThemeByName(document.getElementById('eventTheme').value),
 			description: document.getElementById('eventDescription').value,
 		}
+
+		events.push(newEvent)
 
 		console.log('Новое событие:', newEvent)
 		modal.style.display = 'none'
 		form.reset()
 	})
+
+	// Функция для сброса сообщений об ошибках
+	function resetErrors() {
+		const errorMessages = document.querySelectorAll('.error-message')
+		errorMessages.forEach(msg => {
+			msg.style.display = 'none'
+		})
+	}
 }

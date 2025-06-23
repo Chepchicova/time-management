@@ -41,7 +41,7 @@ const EventThemes = {
 	},
 }
 
-const events = [
+let events = [
 	{
 		id: 1,
 		title: 'Совещание с разработчиками',
