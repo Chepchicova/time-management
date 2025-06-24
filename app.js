@@ -75,16 +75,60 @@ document.addEventListener('DOMContentLoaded', () => {
 	})
 
 	setupEventModal()
+// === НИЖНЯЯ НАВИГАЦИЯ ===
+function setupBottomNav() {
+    const navBtns = document.querySelectorAll('.bottom-nav .nav-btn')
+    const tabs = document.querySelector('.tabs')
+    const content = document.getElementById('content')
+
+    navBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // 1) переключаем active-класс
+            navBtns.forEach(b => b.classList.remove('active'))
+            btn.classList.add('active')
+
+            // 2) читаем, какую ‹data-view› нажали
+            const view = btn.dataset.view
+
+            if (view === 'calendar') {
+                // показываем табсы и текущий календарь
+                tabs.style.display = 'flex'
+                const activeTab = document.querySelector('.tab.active')
+                if (activeTab && activeTab.textContent === 'Месяц') {
+                    showMonthView()
+                } else {
+                    showWeekView()
+                }
+} else if (view === 'notes') {
+    import('./notes.js').then(module => {
+        module.renderNotesPage();
+        window.history.pushState({ view: 'notes' }, '', '#notes');
+        
+        // Гарантированно скрываем вкладки
+        document.querySelector('.tabs').style.display = 'none';
+    });
+
+} else {
+                // скрываем табсы
+                tabs.style.display = 'none'
+                // рендерим «домашку» или «профиль»
+                switch(view) {
+                    case 'home':
+                        content.innerHTML = `<div class="home-view"><h2>Главная</h2><p>Добро пожаловать!</p></div>`
+                        break
+                    case 'profile':
+                        content.innerHTML = `<div class="profile-view"><h2>Профиль</h2><p>Информация о вас.</p></div>`
+                        break
+                }
+            }
+        })
+    })
+}
+
+  setupBottomNav()
 })
 
-// Добавьте этот код после создания модального окна
-document.getElementById('eventForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  validateForm();
-});
 
-// Инициализация валидации при изменении полей
-document.getElementById('eventTitle').addEventListener('input', validateTitle);
-document.getElementById('eventDate').addEventListener('change', validateDate);
-// ... и так для всех полей
+
+
 

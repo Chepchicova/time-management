@@ -139,6 +139,7 @@ function createEventsList(events, filterDate = null) {
 	return html
 }
 
+
 function createModal() {
 	return `
 	 <div class="modal" id="eventModal" style="display: none;">
@@ -283,14 +284,23 @@ function createMonthView(date = new Date(), events = []) {
 }
 
 function createBottomNav() {
-	return `<div class="bottom-nav">
-	  <button class="nav-btn active"><img src="/assets/profile2.svg" /></button>
-	  <button class="nav-btn"><img src="/assets/calendar1.svg" /></button>
-	  <button class="add-btn" id="openModalBtn">+</button>
-	  <button class="nav-btn"><img src="/assets/notes1.svg" /></button>
-	  <button class="nav-btn"><img src="/assets/profile1.svg" /></button>
-	</div>
-	`
+  return `
+    <div class="bottom-nav">
+      <button class="nav-btn active" data-view="home">
+        <img src="/assets/profile2.svg" />
+      </button>
+      <button class="nav-btn" data-view="calendar">
+        <img src="/assets/calendar1.svg" />
+      </button>
+      <button class="add-btn" id="openModalBtn">+</button>
+      <button class="nav-btn" data-view="notes">
+        <img src="/assets/notes1.svg" />
+      </button>
+      <button class="nav-btn" data-view="profile">
+        <img src="/assets/profile1.svg" />
+      </button>
+    </div>
+  `
 }
 
 // После добавления HTML в DOM нужно добавить обработчики:

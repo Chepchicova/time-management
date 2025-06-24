@@ -295,3 +295,104 @@ body::before {
 	align-items: center;
 	backdrop-filter: blur(5px);
 }
+
+
+/* notes.css */
+.notes-view {
+  padding: 20px;
+  padding-bottom: 100px;
+}
+
+.blocks-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.note-block {
+  background: white;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  cursor: pointer;
+  min-height: 150px;
+}
+
+.add-block-btn {
+  background: #f5f5f5;
+  border: 2px dashed #ccc;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-size: 32px;
+  color: #666;
+  cursor: pointer;
+  min-height: 150px;
+}
+
+/* Стили редактора */
+.block-editor {
+  padding: 20px;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.block-title {
+  margin: 0 0 20px 0;
+  outline: none;
+}
+
+.block-title[placeholder]:empty:before {
+  content: attr(placeholder);
+  color: #aaa;
+}
+
+.editor-items {
+  margin-bottom: 20px;
+}
+
+.editor-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.editor-item input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.item-text {
+  flex-grow: 1;
+  outline: none;
+  min-height: 24px;
+}
+
+.item-text[placeholder]:empty:before {
+  content: attr(placeholder);
+  color: #aaa;
+}
+
+.remove-item-btn {
+  background: none;
+  border: none;
+  color: #ff4444;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.add-item-btn {
+  width: 100%;
+  padding: 10px;
+  background: #f5f5f5;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
