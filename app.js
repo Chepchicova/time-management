@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
 					}
 				} else if (view === 'notes') {
 					import('./notes.js').then(module => {
-						module.renderNotesPage()
+						renderNotesPage()
 						window.history.pushState({ view: 'notes' }, '', '#notes')
 
 						// Гарантированно скрываем вкладки

@@ -2,8 +2,8 @@ function createTab(name, active) {
 	return `<div class="tab${active ? ' active' : ''}">${name}</div>`
 }
 
-function createWeekdays() {
-	const days = getCurrentWeekDays()
+function createWeekdays(selectedDate = null) {
+	const days = getCurrentWeekDays(selectedDate)
 	const todayIndex = days.findIndex(day => day.isCurrentDay)
 
 	return `
@@ -26,14 +26,15 @@ function createWeekdays() {
 	`
 }
 
-function getCurrentWeekDays() {
+function getCurrentWeekDays(selectedDate = null) {
 	const daysShort = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
-	const today = new Date()
-	const currentDateString = formatDate(today)
+	const currentDate = new Date(selectedDate || Date.now())
+	const currentDateString = formatDate(currentDate)
 	// Находим понедельник текущей недели
-	const monday = new Date(today)
+	const monday = new Date(currentDate)
 	monday.setDate(
-		today.getDate() - (today.getDay() === 0 ? 6 : today.getDay() - 1)
+		currentDate.getDate() -
+			(currentDate.getDay() === 0 ? 6 : currentDate.getDay() - 1)
 	)
 
 	// Генерируем 7 дней начиная с понедельника
@@ -63,15 +64,9 @@ function formatDate(date) {
 }
 
 function handleDayClick(selectedDate) {
-	// 1. Обновляем активный день в UI
 	updateActiveDay(selectedDate)
-
-	// 2. Получаем все события (предполагаем, что они доступны в глобальной области)
-	// const allEvents = window.calendarEvents || []
-
-	// 3. Рендерим события для выбранной даты
 	const eventsContainer = document.getElementById('eventsContainer')
-	eventsContainer.innerHTML = createEventsList(events, selectedDate)
+	eventsContainer.outerHTML = createEventsList(events, selectedDate)
 }
 
 // Функция обновления активного дня
@@ -254,7 +249,7 @@ function createBottomNav() {
     </div>
   `
 }
-function createModal() {
+function createModal(isEditMode = false) {
 	// Получаем текущую дату в формате YYYY-MM-DD
 	const today = new Date()
 	const todayStr = today.toISOString().split('T')[0]
@@ -263,7 +258,7 @@ function createModal() {
 	 <div class="modal" id="eventModal" style="display: none;">
 	  <div class="modal-content">
 		<span class="close-btn">&times;</span>
-		<h2>Добавить событие</h2>
+		<h2>${isEditMode ? 'Редактировать событие' : 'Добавить событие'}</h2>
 		<form id="eventForm">
 		 <div class="form-group">
 			<label for="eventTitle">Название:</label>
@@ -319,7 +314,9 @@ function createModal() {
 			<textarea id="eventDescription" rows="3"></textarea>
 		 </div>
 		 
-		 <button type="submit" class="submit-btn">Создать</button>
+		<button type="submit" class="submit-btn">${
+			isEditMode ? 'Сохранить' : 'Создать'
+		}</button>
 		</form>
 	  </div>
 	</div>
@@ -335,12 +332,28 @@ function getThemeByName(theme) {
 	return EventThemes.OTHER
 }
 
+function getThemeKey(themeObject) {
+	return Object.keys(EventThemes).find(key => EventThemes[key] === themeObject)
+}
+
+function fillEventForm(event) {
+	document.getElementById('eventTitle').value = event.title
+	document.getElementById('eventDate').value = event.date
+	document.getElementById('startTime').value = event.timeStart
+	document.getElementById('endTime').value = event.timeEnd
+	document.getElementById('eventPerson').value = event.person || ''
+	document.getElementById('eventNotification').checked = event.notification
+	document.getElementById('eventTheme').value = getThemeKey(event.theme)
+	document.getElementById('eventDescription').value = event.description || ''
+}
+
 // После добавления HTML в DOM нужно добавить обработчики:
 function setupEventModal() {
-	const modal = document.getElementById('eventModal')
+	let modal = document.getElementById('eventModal')
 	const openBtn = document.getElementById('openModalBtn')
 	const closeBtn = document.querySelector('.close-btn')
 	const form = document.getElementById('eventForm')
+	let currentEventId = null
 
 	openBtn.addEventListener('click', () => {
 		const selectedDate = document.querySelector('.weekday.active')
@@ -350,14 +363,15 @@ function setupEventModal() {
 
 	closeBtn.addEventListener('click', () => {
 		modal.style.display = 'none'
-		// Сбрасываем ошибки при закрытии
 		resetErrors()
+		form.reset()
 	})
 
 	window.addEventListener('click', e => {
 		if (e.target === modal) {
 			modal.style.display = 'none'
 			resetErrors()
+			form.reset()
 		}
 	})
 
@@ -398,23 +412,37 @@ function setupEventModal() {
 		// Если валидация не прошла, не отправляем форму
 		if (!isValid) return
 		// Если все в порядке, создаем событие
-		const newEvent = {
-			id: events.length + 1,
-			title: title.value,
-			date: date.value,
-			timeStart: startTime.value,
-			timeEnd: endTime.value,
+		const formData = {
+			title: document.getElementById('eventTitle').value,
+			date: document.getElementById('eventDate').value,
+			timeStart: document.getElementById('startTime').value,
+			timeEnd: document.getElementById('endTime').value,
 			person: document.getElementById('eventPerson').value,
 			notification: document.getElementById('eventNotification').checked,
 			theme: getThemeByName(document.getElementById('eventTheme').value),
 			description: document.getElementById('eventDescription').value,
 		}
 
-		events.push(newEvent)
-		console.log('Новое событие:', newEvent)
+		if (currentEventId) {
+			// Редактирование существующего события
+			const eventIndex = events.findIndex(ev => ev.id === currentEventId)
+			if (eventIndex !== -1) {
+				events[eventIndex] = { ...events[eventIndex], ...formData }
+			}
+		} else {
+			// Создание нового события
+			const newEvent = {
+				id: events.length + 1,
+				...formData,
+			}
+			events.push(newEvent)
+		}
 
 		const eventContainer = document.getElementById('eventsContainer')
-		eventContainer.outerHTML = createEventsList(events, date.value)
+		eventContainer.outerHTML = createEventsList(
+			events,
+			document.querySelector('.weekday.active').dataset.date
+		)
 
 		modal.style.display = 'none'
 		form.reset()
@@ -427,4 +455,18 @@ function setupEventModal() {
 			msg.style.display = 'none'
 		})
 	}
+
+	document.addEventListener('click', e => {
+		const eventElement = e.target.closest('.event-card')
+		if (eventElement) {
+			const eventId = parseInt(eventElement.dataset.eventId)
+			const event = events.find(ev => ev.id === eventId)
+
+			if (event) {
+				currentEventId = eventId
+				fillEventForm(event)
+				modal.style.display = 'block'
+			}
+		}
+	})
 }
