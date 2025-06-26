@@ -16,10 +16,14 @@ document.addEventListener('DOMContentLoaded', () => {
 	app.innerHTML = tabsHTML + contentHTML + bottomNavHTML + modalHTML
 
 	// Функция для отображения недельного вида
-	function showWeekView() {
+	function showWeekView(selectedDate = null) {
 		const content = document.getElementById('content')
 		content.innerHTML =
-			createWeekdays() + createEventsList(events, formatDate(new Date()))
+			createWeekdays(selectedDate) +
+			createEventsList(
+				events,
+				selectedDate ? selectedDate : formatDate(new Date())
+			)
 	}
 
 	// Функция для отображения месячного вида
@@ -129,7 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	document.addEventListener('click', function (e) {
 		const btn = e.target.closest('.event-notification-btn')
-
 		if (btn) {
 			const eventId = btn.dataset.eventId
 			const event = events.find(e => e.id === parseInt(eventId))
@@ -141,6 +144,15 @@ document.addEventListener('DOMContentLoaded', () => {
 					? 'assets/notification-on.svg'
 					: 'assets/notification-off.svg'
 			}
+		}
+	})
+
+	document.addEventListener('click', function (e) {
+		const monthRow = e.target.closest('.month-row')
+		if (monthRow) {
+			document.querySelectorAll('.tab')[0].classList.add('active')
+			document.querySelectorAll('.tab')[1].classList.remove('active')
+			showWeekView(monthRow.dataset.date)
 		}
 	})
 })

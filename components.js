@@ -95,9 +95,6 @@ function createEventCard(event) {
 			<button class="event-action-btn event-notification-btn" title="Уведомление" data-event-id="${event.id}">
 			  <img src="${notificationIcon}" alt="Уведомление" class="notification-icon">
 			</button>
-			<button class="event-action-btn event-note-btn"  title="Добавить заметку">
-			  <img src="assets/notes.svg" alt="Заметка">
-			</button>
 			<div class="event-theme-icon" style="background:${event.theme.color};">
 			  <img src=${event.theme.icon} alt="Тема">
 			</div>
@@ -200,7 +197,7 @@ function createMonthView(date = new Date(), events = []) {
 
 		html += `<div class="month-row${isToday ? ' today' : ''}"${
 			isToday ? ' id="today-row"' : ''
-		}>
+		} data-date="${formatDate(dayDate)}">
 		 <div class="month-day">
 			<span class="month-day-week">${weekDayStr}</span>
 			<span class="month-day-num">${day}</span>
@@ -249,7 +246,7 @@ function createBottomNav() {
     </div>
   `
 }
-function createModal(isEditMode = false) {
+function createModal() {
 	// Получаем текущую дату в формате YYYY-MM-DD
 	const today = new Date()
 	const todayStr = today.toISOString().split('T')[0]
@@ -258,7 +255,7 @@ function createModal(isEditMode = false) {
 	 <div class="modal" id="eventModal" style="display: none;">
 	  <div class="modal-content">
 		<span class="close-btn">&times;</span>
-		<h2>${isEditMode ? 'Редактировать событие' : 'Добавить событие'}</h2>
+		<h2>Добавить событие</h2>
 		<form id="eventForm">
 		 <div class="form-group">
 			<label for="eventTitle">Название:</label>
@@ -314,9 +311,7 @@ function createModal(isEditMode = false) {
 			<textarea id="eventDescription" rows="3"></textarea>
 		 </div>
 		 
-		<button type="submit" class="submit-btn">${
-			isEditMode ? 'Сохранить' : 'Создать'
-		}</button>
+		<button type="submit" class="submit-btn">Создать</button>
 		</form>
 	  </div>
 	</div>
@@ -347,6 +342,34 @@ function fillEventForm(event) {
 	document.getElementById('eventDescription').value = event.description || ''
 }
 
+// Функция перевода в режим редактирования
+function setEditMode() {
+	const modal = document.getElementById('eventModal')
+	if (!modal) return
+
+	// Меняем заголовок
+	const title = modal.querySelector('h2')
+	if (title) title.textContent = 'Редактировать событие'
+
+	// Меняем текст кнопки
+	const submitBtn = modal.querySelector('.submit-btn')
+	if (submitBtn) submitBtn.textContent = 'Сохранить'
+}
+
+// Функция перевода в режим создания
+function setCreateMode() {
+	const modal = document.getElementById('eventModal')
+	if (!modal) return
+
+	// Меняем заголовок
+	const title = modal.querySelector('h2')
+	if (title) title.textContent = 'Добавить событие'
+
+	// Меняем текст кнопки
+	const submitBtn = modal.querySelector('.submit-btn')
+	if (submitBtn) submitBtn.textContent = 'Создать'
+}
+
 // После добавления HTML в DOM нужно добавить обработчики:
 function setupEventModal() {
 	let modal = document.getElementById('eventModal')
@@ -356,6 +379,7 @@ function setupEventModal() {
 	let currentEventId = null
 
 	openBtn.addEventListener('click', () => {
+		setCreateMode()
 		const selectedDate = document.querySelector('.weekday.active')
 		document.getElementById('eventDate').value = selectedDate.dataset.date
 		modal.style.display = 'block'
@@ -457,12 +481,16 @@ function setupEventModal() {
 	}
 
 	document.addEventListener('click', e => {
+		if (e.target.closest('.event-actions')) {
+			return // Игнорируем клики в этой зоне полностью
+		}
+
 		const eventElement = e.target.closest('.event-card')
 		if (eventElement) {
 			const eventId = parseInt(eventElement.dataset.eventId)
 			const event = events.find(ev => ev.id === eventId)
-
 			if (event) {
+				setEditMode()
 				currentEventId = eventId
 				fillEventForm(event)
 				modal.style.display = 'block'
