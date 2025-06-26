@@ -75,6 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	})
 
 	setupEventModal()
+
 	// === НИЖНЯЯ НАВИГАЦИЯ ===
 	function setupBottomNav() {
 		const navBtns = document.querySelectorAll('.bottom-nav .nav-btn')

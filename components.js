@@ -343,10 +343,8 @@ function setupEventModal() {
 	const form = document.getElementById('eventForm')
 
 	openBtn.addEventListener('click', () => {
-		// При открытии модального окна устанавливаем текущую дату
-		const today = new Date()
-		const todayStr = today.toISOString().split('T')[0]
-		document.getElementById('eventDate').value = todayStr
+		const selectedDate = document.querySelector('.weekday.active')
+		document.getElementById('eventDate').value = selectedDate.dataset.date
 		modal.style.display = 'block'
 	})
 
@@ -382,7 +380,6 @@ function setupEventModal() {
 			document.getElementById('titleError').style.display = 'block'
 			isValid = false
 		}
-
 		// Проверка даты (не раньше сегодня)
 		const today = new Date()
 		today.setHours(0, 0, 0, 0)
@@ -400,9 +397,9 @@ function setupEventModal() {
 
 		// Если валидация не прошла, не отправляем форму
 		if (!isValid) return
-
 		// Если все в порядке, создаем событие
 		const newEvent = {
+			id: events.length + 1,
 			title: title.value,
 			date: date.value,
 			timeStart: startTime.value,
@@ -414,8 +411,11 @@ function setupEventModal() {
 		}
 
 		events.push(newEvent)
-
 		console.log('Новое событие:', newEvent)
+
+		const eventContainer = document.getElementById('eventsContainer')
+		eventContainer.outerHTML = createEventsList(events, date.value)
+
 		modal.style.display = 'none'
 		form.reset()
 	})
