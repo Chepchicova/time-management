@@ -1,13 +1,47 @@
 const EventThemes = {
-	WORK: { color: 'rgba(255, 164, 164, 0.72)' },
-	PERSONAL: { color: 'rgba(255, 211, 180, 0.72)' },
-	MEETING: { color: 'rgba(255, 251, 180, 0.72)' },
-	HEALTH: { color: 'rgba(255, 180, 249, 0.72)' },
-	EDUCATION: { color: 'rgba(180, 255, 186, 0.72)' },
-	OTHER: { color: 'rgba(155, 155, 155, 0.72) ' },
+	WORK: {
+		name: 'Работа',
+		color: 'rgba(255, 164, 164, 0.72)',
+		icon: '/assets/theme_icons/work.svg',
+	},
+	PERSONAL: {
+		name: 'Личное',
+		color: 'rgba(255, 211, 180, 0.72)',
+		icon: '/assets/theme_icons/personal.svg',
+	},
+	MEETING: {
+		name: 'Встречи',
+		color: 'rgba(255, 251, 180, 0.72)',
+		icon: '/assets/theme_icons/meeting.svg',
+	},
+	SPORT: {
+		name: 'Спорт',
+		color: '#4CAF50',
+		icon: '/assets/theme_icons/sport.svg',
+	},
+	HEALTH: {
+		name: 'Здоровье',
+		color: 'rgba(255, 180, 249, 0.72)',
+		icon: '/assets/theme_icons/health.svg',
+	},
+	EDUCATION: {
+		name: 'Учеба',
+		color: 'rgba(180, 255, 186, 0.72)',
+		icon: '/assets/theme_icons/education.svg',
+	},
+	HOLYDAYS: {
+		name: 'Праздники',
+		color: '#9C27B0',
+		icon: '/assets/theme_icons/holydays.svg',
+	},
+	OTHER: {
+		name: 'Другое',
+		color: 'rgba(155, 155, 155, 0.72)',
+		icon: '/assets/theme_icons/other.svg',
+	},
 }
 
-const events = [
+let events = [
 	{
 		id: 1,
 		title: 'Совещание с разработчиками',
@@ -24,7 +58,7 @@ const events = [
 		description: 'Обсуждение этапов проекта',
 	},
 	{
-		id: 1,
+		id: 2,
 		title: 'Посещение врача',
 		date: '2025-06-16',
 		timeStart: '09:00',
@@ -37,11 +71,11 @@ const events = [
 		theme: EventThemes.PERSONAL,
 	},
 	{
-		id: 1,
+		id: 3,
 		title: 'Совещание с разработчиками',
-		date: '2023-06-23', // Формат YYYY-MM-DD
-		timeStart: '15:00', // Формат HH:MM (24h)
-		timeEnd: '16:30', // Формат HH:MM (24h)
+		date: '2025-06-23',
+		timeStart: '15:00',
+		timeEnd: '16:30',
 		person: {
 			id: 101,
 			name: 'Иван Петров',
@@ -51,8 +85,8 @@ const events = [
 		theme: EventThemes.MEETING,
 		description: 'Обсуждение этапов проекта',
 	},
-		{
-		id: 1,
+	{
+		id: 4,
 		title: 'Совещание с разработчиками',
 		date: '2025-06-17', // Формат YYYY-MM-DD
 		timeStart: '11:00', // Формат HH:MM (24h)
@@ -66,8 +100,8 @@ const events = [
 		theme: EventThemes.EDUCATION,
 		description: 'Обсуждение этапов проекта',
 	},
-		{
-		id: 1,
+	{
+		id: 5,
 		title: 'Совещание с разработчиками',
 		date: '2025-06-17', // Формат YYYY-MM-DD
 		timeStart: '11:00', // Формат HH:MM (24h)
@@ -81,8 +115,8 @@ const events = [
 		theme: EventThemes.HEALTH,
 		description: 'Обсуждение этапов проекта',
 	},
-		{
-		id: 1,
+	{
+		id: 6,
 		title: 'Совещание с разработчиками',
 		date: '2025-06-17', // Формат YYYY-MM-DD
 		timeStart: '11:00', // Формат HH:MM (24h)
