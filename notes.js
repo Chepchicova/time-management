@@ -65,7 +65,7 @@ function openNoteEditor(noteId) {
         </div>
       `}</div>
     </div>
-  `;
+  `
 
   // Ограничение заголовка
   const titleEl = document.querySelector('.note-title');
