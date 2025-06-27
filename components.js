@@ -100,9 +100,6 @@ function createEventCard(event) {
 			<button class="event-action-btn event-notification-btn" title="Уведомление" data-event-id="${event.id}">
 			  <img src="${notificationIcon}" alt="Уведомление" class="notification-icon">
 			</button>
-			<button class="event-action-btn event-note-btn"  title="Добавить заметку">
-			  <img src="assets/notes.svg" alt="Заметка">
-			</button>
 			<div class="event-theme-icon" style="background:${event.theme.color};">
 			  <img src=${event.theme.icon} alt="Тема">
 			</div>
@@ -110,6 +107,9 @@ function createEventCard(event) {
 	  </div>
 	</div>`
 }
+/*			<button class="event-action-btn event-note-btn"  title="Добавить заметку">
+			  <img src="assets/notes.svg" alt="Заметка">
+			</button>*/
 
 function createEventsList(events, filterDate = null) {
 	// Фильтрация событий по дате, если указана
@@ -244,15 +244,17 @@ function createBottomNav() {
       <button class="nav-btn" data-view="calendar">
         <img src="/assets/calendar.svg" />
       </button>
-      <button class="add-btn" id="openModalBtn">+</button>
-      <button class="nav-btn" data-view="notes">
-        <img src="/assets/notes.svg" />
-      </button>
+
+
       <button class="nav-btn" data-view="profile">
         <img src="/assets/profile.svg" />
+		      <button class="add-btn" id="openModalBtn">+</button>
       </button>
     </div>
   `
+  /*      <button class="nav-btn" data-view="notes">
+        <img src="/assets/notes.svg" />
+      </button>*/
 }
 function createModal() {
 	// Получаем текущую дату в формате YYYY-MM-DD

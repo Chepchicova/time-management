@@ -1,3 +1,4 @@
+//app.js
 document.addEventListener('DOMContentLoaded', () => {
 	const app = document.getElementById('app')
 
@@ -98,8 +99,8 @@ document.addEventListener('DOMContentLoaded', () => {
 						showMonthView()
 					} else {
 						showWeekView()
-					}
-				} else if (view === 'notes') {
+					} 
+				}/* else if (view === 'notes') {
 					import('./notes.js').then(module => {
 						module.renderNotesPage()
 						window.history.pushState({ view: 'notes' }, '', '#notes')
@@ -107,17 +108,24 @@ document.addEventListener('DOMContentLoaded', () => {
 						// Гарантированно скрываем вкладки
 						document.querySelector('.tabs').style.display = 'none'
 					})
-				} else {
-					// скрываем табсы
+				} */ else {
 					tabs.style.display = 'none'
 					// рендерим «домашку» или «профиль»
 					switch (view) {
 						case 'home':
-							content.innerHTML = `<div class="home-view"><h2>Главная</h2><p>Добро пожаловать!</p></div>`
+							content.innerHTML = `<div class="contact-view"><h2>Контакты</h2><p>у вас нет друзей!!!!!</p></div>`
 							break
-						case 'profile':
-							content.innerHTML = `<div class="profile-view"><h2>Профиль</h2><p>Информация о вас.</p></div>`
-							break
+case 'profile':
+                        // Измененная часть для профиля
+                        import('./profile.js').then(module => {
+                            content.innerHTML = module.renderProfilePage()
+                            module.setupProfilePage()
+                            window.history.pushState({ view: 'profile' }, '', '#profile')
+                        }).catch(error => {
+                            console.error('Ошибка загрузки профиля:', error)
+                            content.innerHTML = `<div class="profile-view"><h2>Профиль</h2><p>Ошибка загрузки</p></div>`
+                        })
+                        break
 					}
 				}
 			})

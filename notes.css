@@ -1,0 +1,123 @@
+
+/* notes.css */
+.notes-view { padding:20px }
+.blocks-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:20px;
+}
+.note-block {
+  background:#fff;border-radius:8px;padding:15px;
+  min-height:150px;box-shadow:0 2px 5px rgba(0,0,0,.05);
+  cursor:pointer; display:flex; flex-direction:column;
+}
+.block-footer { margin-top:auto;font-size:14px;color:#333 }
+.add-block-btn {
+  background:#f5f5f5;border:2px dashed #ccc;border-radius:8px;
+  display:grid;place-items:center;font-size:32px;color:#666;
+  cursor:pointer;min-height:150px;
+}
+.add-block-circle {
+  width: 60px;
+  height: 60px;
+  background: #4CAF50;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  box-shadow: 0 2px 10px rgba(76, 175, 80, 0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin: 10px;
+}
+
+.add-block-circle:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+}
+
+.add-block-circle svg {
+  stroke: white;
+}
+
+/* == редактор == */
+.note-editor { padding:20px }
+.back-btn {
+  background:none;border:none;font-size:24px;cursor:pointer;
+  margin-bottom:15px;
+}
+.note-title {
+  text-align:center;
+  margin:0 0 20px;
+  border:none;border-bottom:1px solid #eee;
+  padding-bottom:10px;
+  font-size:18px;outline:none;
+}
+.note-content {
+  min-height:60vh;
+  padding:0 1em;
+  outline:none;
+}
+.task-line {
+  display:flex;
+  align-items:flex-start;
+  width:100%;
+  margin:.25em 0;
+}
+.task-checkbox {
+  margin:.2em .5em 0 0;
+  flex-shrink:0;
+}
+
+/* Стили как в Samsung Notes */
+.note-content {
+  min-height: 60vh;
+  padding: 15px;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.task-line {
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+  min-height: 28px;
+}
+
+.samsung-checkbox {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #4CAF50;
+  border-radius: 4px;
+  margin-right: 12px;
+  position: relative;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.samsung-checkbox:checked {
+  background-color: #4CAF50;
+}
+
+.samsung-checkbox:checked::after {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.task-line span {
+  flex: 1;
+  outline: none;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
