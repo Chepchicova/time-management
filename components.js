@@ -247,7 +247,7 @@ function createBottomNav() {
       </button>
     </div>
   `
-  /*      <button class="nav-btn" data-view="notes">
+	/*      <button class="nav-btn" data-view="notes">
         <img src="/assets/notes.svg" />
       </button>*/
 }
@@ -438,6 +438,23 @@ function setupEventModal() {
 			isValid = false
 		}
 
+		// Проверка пересечения с другими событиями
+		if (startTime.value && endTime.value) {
+			const timeErrorElement = document.getElementById('timeError')
+			const hasOverlap = checkTimeOverlap(
+				date.value,
+				startTime.value,
+				endTime.value,
+				currentEventId
+			)
+
+			if (hasOverlap) {
+				timeErrorElement.textContent = 'Время пересекается с другим событием'
+				timeErrorElement.style.display = 'block'
+				isValid = false
+			}
+		}
+
 		// Если валидация не прошла, не отправляем форму
 		if (!isValid) return
 		// Если все в порядке, создаем событие
@@ -475,7 +492,37 @@ function setupEventModal() {
 
 		modal.style.display = 'none'
 		form.reset()
+		currentEventId = null
 	})
+
+	function checkTimeOverlap(date, newStartTime, newEndTime, currentEventId) {
+		// Получаем все события на выбранную дату (let вместо const)
+		let eventsOnDate = events.filter(event => event.date === date)
+
+		// Игнорируем текущее событие при редактировании
+		if (currentEventId) {
+			eventsOnDate = eventsOnDate.filter(event => event.id !== currentEventId)
+		}
+
+		// Преобразуем время в минуты для удобства сравнения
+		const newStart = timeToMinutes(newStartTime)
+		const newEnd = timeToMinutes(newEndTime)
+
+		return eventsOnDate.some(event => {
+			const existingStart = timeToMinutes(event.timeStart)
+			const existingEnd = timeToMinutes(event.timeEnd)
+
+			// Проверяем пересечение интервалов
+			return newStart < existingEnd && newEnd > existingStart
+		})
+	}
+
+	// Вспомогательная функция для преобразования времени в минуты
+	function timeToMinutes(timeStr) {
+		if (!timeStr) return 0
+		const [hours, minutes] = timeStr.split(':').map(Number)
+		return hours * 60 + minutes
+	}
 
 	// Функция для сброса сообщений об ошибках
 	function resetErrors() {
