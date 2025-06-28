@@ -84,7 +84,19 @@ function createEventCard(event) {
 		? 'assets/notification-on.svg'
 		: 'assets/notification-off.svg'
 
-	return `<div class="event-card" data-event-id="${event.id}">
+	const now = new Date()
+	const currentDateStr = now.toISOString().split('T')[0]
+	const currentTimeStr = now.toTimeString().substring(0, 5) // "HH:MM"
+
+	// Формируем классы карточки
+	const cardClasses = ['event-card']
+	if (
+		event.date < currentDateStr ||
+		(event.date === currentDateStr && event.timeEnd < currentTimeStr)
+	)
+		cardClasses.push('inactive')
+
+	return `<div class="${cardClasses.join(' ')}" data-event-id="${event.id}">
 	  <div class="event-stripe" style="background:${event.theme.color};"></div>
 	  <div class="event-content">
 		 <div class="event-info">
@@ -92,7 +104,9 @@ function createEventCard(event) {
 			<div class="event-hours">${event.timeStart}-${event.timeEnd}</div>
 		 </div>
 		 <div class="event-actions">
-			<button class="event-action-btn event-notification-btn" title="Уведомление" data-event-id="${event.id}">
+			<button class="event-action-btn event-notification-btn" title="Уведомление" data-event-id="${
+				event.id
+			}">
 			  <img src="${notificationIcon}" alt="Уведомление" class="notification-icon">
 			</button>
 			<div class="event-theme-icon" style="background:${event.theme.color};">
@@ -163,11 +177,31 @@ function getTimeDifferenceInMinutes(endTime, startTime) {
 	return startTotal - endTotal
 }
 
-// месяц
+// Вспомогательная функция для преобразования времени в минуты
+function timeToMinutes(timeStr) {
+	if (!timeStr) return 0
+	const [hours, minutes] = timeStr.split(':').map(Number)
+	return hours * 60 + minutes
+}
 
+// месяц
 function createMonthView(date = new Date(), events = []) {
 	const year = date.getFullYear()
 	const month = date.getMonth()
+	const monthNames = [
+		'Январь',
+		'Февраль',
+		'Март',
+		'Апрель',
+		'Май',
+		'Июнь',
+		'Июль',
+		'Август',
+		'Сентябрь',
+		'Октябрь',
+		'Ноябрь',
+		'Декабрь',
+	]
 	const daysInMonth = new Date(year, month + 1, 0).getDate()
 	const weekDays = ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ']
 
@@ -190,44 +224,95 @@ function createMonthView(date = new Date(), events = []) {
 		}
 	})
 
-	let html = `<div class="month-list">`
+	// Создаем HTML для навигации
+	let html = `
+	<div class="month-navigation">
+		 <button class="month-nav-btn prev-month" data-action="prev">←</button>
+		 <div class="month-title">
+			  <span class="month-name">${monthNames[month]}</span>
+			  <span class="month-year">${year}</span>
+		 </div>
+		 <button class="month-nav-btn next-month" data-action="next">→</button>
+	</div>
+	<div class="month-list">`
 
+	// Добавляем дни месяца
 	for (let day = 1; day <= daysInMonth; day++) {
 		const dayDate = new Date(year, month, day)
 		const weekDayStr = weekDays[dayDate.getDay()]
 		const dayEvents = eventsByDay[day] || []
 		const isToday = day === todayDay
 
+		// Рассчитываем заполненность дня (в минутах)
+		let busyMinutes = 0
+		const totalMinutesInDay = 24 * 60 // 1440 минут в сутках
+
+		dayEvents.forEach(event => {
+			const start = timeToMinutes(event.timeStart)
+			const end = timeToMinutes(event.timeEnd) // Если нет end, считаем как 1 час
+			busyMinutes += end - start
+		})
+
+		// Ограничиваем максимальную заполненность 100%
+		const busyPercentage = Math.min(
+			Math.round((busyMinutes / totalMinutesInDay) * 100),
+			100
+		)
+
 		html += `<div class="month-row${isToday ? ' today' : ''}"${
 			isToday ? ' id="today-row"' : ''
 		} data-date="${formatDate(dayDate)}">
-		 <div class="month-day">
-			<span class="month-day-week">${weekDayStr}</span>
-			<span class="month-day-num">${day}</span>
-		 </div>
-		 <div class="month-events">
-			${
-				dayEvents.length === 0
-					? ``
-					: dayEvents
-							.map(
-								event => `
-					  <div class="month-event" style="background:${event.theme.color}">
-						 <div class="month-event-title">${event.title}</div>
-						 <div class="month-event-time">${event.timeStart}${
-									event.timeEnd ? '–' + event.timeEnd : ''
-								}</div>
-					  </div>
-					`
-							)
-							.join('')
-			}
-		 </div>
-	  </div>`
+			 <div class="month-day">
+				  <span class="month-day-week">${weekDayStr}</span>
+				  <span class="month-day-num">${day}</span>
+			 </div>
+			 <div class="month-events">
+				  ${
+						dayEvents.length === 0
+							? ``
+							: dayEvents
+									.map(
+										event => `
+										<div class="month-event" style="background:${event.theme.color}">
+											 <div class="month-event-title">${event.title}</div>
+											 <div class="month-event-time">${event.timeStart}${
+											event.timeEnd ? '–' + event.timeEnd : ''
+										}</div>
+										</div>
+										`
+									)
+									.join('')
+					}
+			 </div>
+			 <div class="day-utilization">
+				  <div class="utilization-bar" style="width: ${busyPercentage}%"></div>
+			 </div>
+		</div>`
 	}
 
 	html += `</div>`
 	return html
+}
+
+function setupMonthNavigation(currentDate, events) {
+	document.addEventListener('click', function (e) {
+		if (e.target.closest('.month-nav-btn')) {
+			const btn = e.target.closest('.month-nav-btn')
+			const action = btn.dataset.action
+			const newDate = new Date(currentDate)
+
+			if (action === 'prev') {
+				newDate.setMonth(newDate.getMonth() - 1)
+			} else if (action === 'next') {
+				newDate.setMonth(newDate.getMonth() + 1)
+			}
+
+			// Обновляем отображение календаря
+			const content = document.getElementById('content')
+			content.innerHTML = createMonthView(newDate, events)
+			currentDate = newDate
+		}
+	})
 }
 
 function createBottomNav() {
@@ -251,6 +336,7 @@ function createBottomNav() {
         <img src="/assets/notes.svg" />
       </button>*/
 }
+
 function createModal() {
 	// Получаем текущую дату в формате YYYY-MM-DD
 	const today = new Date()
@@ -304,8 +390,7 @@ function createModal() {
 			<select id="eventTheme" required>
 			 ${Object.entries(EventThemes)
 					.map(
-						([key, value]) =>
-							`<option value="${key}" style="color: ${value.color}">${key}</option>`
+						([key, value]) => `<option value="${key}">${value.name}</option>`
 					)
 					.join('')}
 			</select>
@@ -386,7 +471,9 @@ function setupEventModal() {
 	openBtn.addEventListener('click', () => {
 		setCreateMode()
 		const selectedDate = document.querySelector('.weekday.active')
-		document.getElementById('eventDate').value = selectedDate.dataset.date
+		if (selectedDate) {
+			document.getElementById('eventDate').value = selectedDate.dataset.date
+		}
 		modal.style.display = 'block'
 	})
 
@@ -515,13 +602,6 @@ function setupEventModal() {
 			// Проверяем пересечение интервалов
 			return newStart < existingEnd && newEnd > existingStart
 		})
-	}
-
-	// Вспомогательная функция для преобразования времени в минуты
-	function timeToMinutes(timeStr) {
-		if (!timeStr) return 0
-		const [hours, minutes] = timeStr.split(':').map(Number)
-		return hours * 60 + minutes
 	}
 
 	// Функция для сброса сообщений об ошибках

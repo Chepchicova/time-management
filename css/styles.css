@@ -53,8 +53,6 @@ body::before {
 	justify-content: space-between;
 	margin: 24px 16px 16px 16px;
 	position: sticky;
-
-
 }
 .tab {
 	flex: 1;
@@ -367,116 +365,210 @@ body::before {
 }
 
 /*профиль*/
-  .profile-container {
-    padding: 20px;
-    max-width: 600px;
-    margin: 0 auto;
-  }
+.profile-container {
+	padding: 20px;
+	max-width: 600px;
+	margin: 0 auto;
+}
 
-  .profile-header {
-    text-align: center;
-    margin-bottom: 30px;
-  }
+.profile-header {
+	text-align: center;
+	margin-bottom: 30px;
+}
 
-  .profile-header h2 {
-    font-size: 24px;
-    color: #333;
-  }
+.profile-header h2 {
+	font-size: 24px;
+	color: #333;
+}
 
-  .profile-content {
-    background: #fff;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-  }
+.profile-content {
+	background: #fff;
+	border-radius: 12px;
+	padding: 20px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
 
-  .profile-avatar-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
-  }
+.profile-avatar-section {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-bottom: 20px;
+}
 
-  .profile-avatar {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid #5f5cff;
-    margin-bottom: 10px;
-  }
+.profile-avatar {
+	width: 120px;
+	height: 120px;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 3px solid #5f5cff;
+	margin-bottom: 10px;
+}
 
-  .change-avatar-btn {
-    background: none;
-    border: none;
-    color: #5f5cff;
-    font-size: 14px;
-    cursor: pointer;
-  }
+.change-avatar-btn {
+	background: none;
+	border: none;
+	color: #5f5cff;
+	font-size: 14px;
+	cursor: pointer;
+}
 
-  .profile-details {
-    width: 100%;
-    margin-bottom: 20px;
-  }
+.profile-details {
+	width: 100%;
+	margin-bottom: 20px;
+}
 
-  .detail-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 12px 0;
-    border-bottom: 1px solid #eee;
-  }
+.detail-row {
+	display: flex;
+	justify-content: space-between;
+	padding: 12px 0;
+	border-bottom: 1px solid #eee;
+}
 
-  .detail-label {
-    font-weight: 500;
-    color: #666;
-  }
+.detail-label {
+	font-weight: 500;
+	color: #666;
+}
 
 .detail-value {
-    color: #333;
-    min-height: 24px; /* Фиксированная высота */
-    display: inline-block;
-    width: calc(100% - 100px); /* Ширина с учетом label */
-    box-sizing: border-box;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+	color: #333;
+	min-height: 24px; /* Фиксированная высота */
+	display: inline-block;
+	width: calc(100% - 100px); /* Ширина с учетом label */
+	box-sizing: border-box;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .detail-value.editing {
-    background: #f0f0f0;
-    padding: 2px 5px;
-    border-radius: 4px;
-    border: 1px dashed #ccc;
-    white-space: normal; /* Разрешаем перенос строк */
-    overflow: visible; /* Разрешаем выход за границы */
-    height: auto; /* Автоматическая высота */
-    min-height: 24px; /* Минимальная высота */
-    max-height: 72px; /* Максимальная высота (3 строки) */
-    resize: none; /* Запрещаем изменение размера */
+	background: #f0f0f0;
+	padding: 2px 5px;
+	border-radius: 4px;
+	border: 1px dashed #ccc;
+	white-space: normal; /* Разрешаем перенос строк */
+	overflow: visible; /* Разрешаем выход за границы */
+	height: auto; /* Автоматическая высота */
+	min-height: 24px; /* Минимальная высота */
+	max-height: 72px; /* Максимальная высота (3 строки) */
+	resize: none; /* Запрещаем изменение размера */
 }
-  .edit-profile-btn {
-    width: 100%;
-    padding: 12px;
-    background: linear-gradient(90deg, #2826ae 0%, #6557f8 100%);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
+.edit-profile-btn {
+	width: 100%;
+	padding: 12px;
+	background: linear-gradient(90deg, #2826ae 0%, #6557f8 100%);
+	color: white;
+	border: none;
+	border-radius: 8px;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background 0.2s;
+}
 
-  .edit-profile-btn:hover {
-    background: linear-gradient(90deg, #2826ae 0%, #6557f8 100%);
-  }
+.edit-profile-btn:hover {
+	background: linear-gradient(90deg, #2826ae 0%, #6557f8 100%);
+}
 
-  @media (max-width: 480px) {
-    .profile-container {
-      padding: 15px;
-    }
-    
-    .profile-avatar {
-      width: 100px;
-      height: 100px;
-    }
-  }
+@media (max-width: 480px) {
+	.profile-container {
+		padding: 15px;
+	}
+
+	.profile-avatar {
+		width: 100px;
+		height: 100px;
+	}
+}
+
+.month-navigation {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px 0;
+	margin-bottom: 15px;
+}
+
+.month-title {
+	display: flex;
+	gap: 5px;
+	font-size: 1.2em;
+	font-weight: bold;
+}
+
+.month-nav-btn {
+	background: none;
+	border: none;
+	font-size: 1.5em;
+	cursor: pointer;
+	padding: 5px 15px;
+	border-radius: 5px;
+	transition: background-color 0.2s;
+}
+
+.month-nav-btn:hover {
+	background-color: #f0f0f0;
+}
+
+.event-card.inactive {
+	opacity: 0.6;
+	filter: grayscale(50%);
+}
+
+.event-card.inactive .event-title {
+	text-decoration: line-through;
+}
+
+.event-card.inactive .event-notification-btn {
+	pointer-events: none;
+	opacity: 0.5;
+}
+
+.day-utilization {
+	position: absolute;
+	bottom: 2px;
+	left: 4px;
+	right: 4px;
+	height: 4px;
+	background: rgba(228, 228, 228, 0.3);
+	border-radius: 2px;
+	overflow: hidden;
+}
+
+.utilization-bar {
+	height: 100%;
+	background: linear-gradient(
+		90deg,
+		#ff6b6b,
+		#ffa3a3
+	); /* Яркий красно-розовый */
+	transition: width 0.3s ease;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Для полностью занятых дней */
+.utilization-bar[style*='100%'] {
+	background: linear-gradient(
+		90deg,
+		rgba(245, 67, 54, 0.7),
+		rgba(255, 152, 0, 0.9)
+	);
+}
+
+/* Для сегодняшнего дня */
+.month-row.today .utilization-bar {
+	background: linear-gradient(90deg, #a162e8, #c197ff); /* Яркий фиолетовый */
+}
+
+.month-row.today .utilization-text {
+	background: rgba(161, 98, 232, 0.9); /* Фиолетовый фон */
+	color: white;
+}
+
+/* Адаптация структуры HTML */
+.month-row {
+	position: relative; /* Для позиционирования полосы */
+	padding-bottom: 12px; /* Место для полосы */
+}
+
+.month-events {
+	padding-bottom: 6px; /* Чтобы не перекрывалось текстом */
+}

@@ -16,7 +16,7 @@ const EventThemes = {
 	},
 	SPORT: {
 		name: 'Спорт',
-		color: '#4CAF50',
+		color: 'rgba(181, 94, 238, 0.72)',
 		icon: '/assets/theme_icons/sport.svg',
 	},
 	HEALTH: {
@@ -31,7 +31,7 @@ const EventThemes = {
 	},
 	HOLYDAYS: {
 		name: 'Праздники',
-		color: '#9C27B0',
+		color: 'rgba(225, 88, 161, 0.72)',
 		icon: '/assets/theme_icons/holydays.svg',
 	},
 	OTHER: {

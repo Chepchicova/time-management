@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	function showMonthView() {
 		const content = document.getElementById('content')
 		content.innerHTML = createMonthView(new Date(), events)
+		setupMonthNavigation(new Date(), events)
 
 		// Автопрокрутка к сегодняшнему дню (если есть)
 		setTimeout(() => {
@@ -104,8 +105,8 @@ document.addEventListener('DOMContentLoaded', () => {
 						showMonthView()
 					} else {
 						showWeekView()
-					} 
-				}/* else if (view === 'notes') {
+					}
+				} /* else if (view === 'notes') {
 					import('./notes.js').then(module => {
 						renderNotesPage()
 						window.history.pushState({ view: 'notes' }, '', '#notes')
@@ -120,17 +121,19 @@ document.addEventListener('DOMContentLoaded', () => {
 						case 'home':
 							content.innerHTML = `<div class="contact-view"><h2>Контакты</h2><p>у вас нет друзей!!!!!</p></div>`
 							break
-case 'profile':
-                        // Измененная часть для профиля
-                        import('./profile.js').then(module => {
-                            content.innerHTML = module.renderProfilePage()
-                            module.setupProfilePage()
-                            window.history.pushState({ view: 'profile' }, '', '#profile')
-                        }).catch(error => {
-                            console.error('Ошибка загрузки профиля:', error)
-                            content.innerHTML = `<div class="profile-view"><h2>Профиль</h2><p>Ошибка загрузки</p></div>`
-                        })
-                        break
+						case 'profile':
+							// Измененная часть для профиля
+							import('./profile.js')
+								.then(module => {
+									content.innerHTML = module.renderProfilePage()
+									module.setupProfilePage()
+									window.history.pushState({ view: 'profile' }, '', '#profile')
+								})
+								.catch(error => {
+									console.error('Ошибка загрузки профиля:', error)
+									content.innerHTML = `<div class="profile-view"><h2>Профиль</h2><p>Ошибка загрузки</p></div>`
+								})
+							break
 					}
 				}
 			})
