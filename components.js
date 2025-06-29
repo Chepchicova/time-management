@@ -285,8 +285,13 @@ function createMonthView(date = new Date(), events = []) {
 					}
 			 </div>
 			 <div class="day-utilization">
-				  <div class="utilization-bar" style="width: ${busyPercentage}%"></div>
-			 </div>
+   			 <div class="utilization-container">
+       			 <div class="utilization-gradient"></div>
+       				 <div class="utilization-mask" style="width: ${
+									100 - busyPercentage
+								}%"></div>
+    		</div>
+		</div>
 		</div>`
 	}
 
@@ -340,7 +345,12 @@ function createBottomNav() {
 function createModal() {
 	// Получаем текущую дату в формате YYYY-MM-DD
 	const today = new Date()
-	const todayStr = today.toISOString().split('T')[0]
+	const todayStr = [
+		today.getFullYear(),
+		(today.getMonth() + 1).toString().padStart(2, '0'),
+		today.getDate().toString().padStart(2, '0'),
+	].join('-')
+	console.log('createModal', todayStr)
 
 	return `
 	 <div class="modal" id="eventModal" style="display: none;">
@@ -571,11 +581,15 @@ function setupEventModal() {
 			events.push(newEvent)
 		}
 
-		const eventContainer = document.getElementById('eventsContainer')
-		eventContainer.outerHTML = createEventsList(
-			events,
-			document.querySelector('.weekday.active').dataset.date
-		)
+		const currentDate = document.querySelector('.weekday.active')
+		if (currentDate && currentDate.dataset.date === date.value) {
+			const eventContainer = document.getElementById('eventsContainer')
+			eventContainer.outerHTML = createEventsList(
+				events,
+				currentDate.dataset.date
+			)
+		} else if (!currentDate) {
+		}
 
 		modal.style.display = 'none'
 		form.reset()

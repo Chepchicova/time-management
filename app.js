@@ -119,7 +119,20 @@ document.addEventListener('DOMContentLoaded', () => {
 					// рендерим «домашку» или «профиль»
 					switch (view) {
 						case 'home':
-							content.innerHTML = `<div class="contact-view"><h2>Контакты</h2><p>у вас нет друзей!!!!!</p></div>`
+							import('./contacts.js')
+								.then(module => {
+									content.innerHTML = module.renderContactsPage()
+									module.setupContactsPage()
+									window.history.pushState(
+										{ view: 'contacts' },
+										'',
+										'#contacts'
+									)
+								})
+								.catch(error => {
+									console.error('Ошибка загрузки контактов:', error)
+									content.innerHTML = `<div class="contacts-view"><h2>Контакты</h2><p>Ошибка загрузки</p></div>`
+								})
 							break
 						case 'profile':
 							// Измененная часть для профиля
