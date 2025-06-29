@@ -1,4 +1,5 @@
 //app.js
+
 document.addEventListener('DOMContentLoaded', () => {
 	const app = document.getElementById('app')
 
@@ -16,39 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	app.innerHTML = tabsHTML + contentHTML + bottomNavHTML + modalHTML
 
-	// Функция для отображения недельного вида
-	function showWeekView(selectedDate = null) {
-		const content = document.getElementById('content')
-		content.innerHTML =
-			createWeekdays(selectedDate) +
-			createEventsList(
-				events,
-				selectedDate ? selectedDate : formatDate(new Date())
-			)
-	}
-
-	// Функция для отображения месячного вида
-	function showMonthView() {
-		const content = document.getElementById('content')
-		content.innerHTML = createMonthView(new Date(), events)
-		setupMonthNavigation(new Date(), events)
-
-		// Автопрокрутка к сегодняшнему дню (если есть)
-		setTimeout(() => {
-			const todayRow = document.getElementById('today-row')
-			if (todayRow) {
-				todayRow.scrollIntoView({ block: 'center', behavior: 'smooth' })
-			}
-		}, 100)
-	}
-
 	// Обработчики для вкладок
 	document.querySelectorAll('.tab').forEach((tab, index) => {
 		tab.addEventListener('click', () => {
-			document
-				.querySelectorAll('.tab')
-				.forEach(t => t.classList.remove('active'))
-			tab.classList.add('active')
 			if (index === 0) {
 				showWeekView()
 				window.history.pushState({ view: 'week' }, '', '#week')
@@ -70,12 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	window.addEventListener('popstate', e => {
 		if (window.location.hash === '#month') {
-			document.querySelectorAll('.tab')[1].classList.add('active')
-			document.querySelectorAll('.tab')[0].classList.remove('active')
 			showMonthView()
 		} else {
-			document.querySelectorAll('.tab')[0].classList.add('active')
-			document.querySelectorAll('.tab')[1].classList.remove('active')
 			showWeekView()
 		}
 	})
@@ -180,3 +147,33 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	})
 })
+
+// Функция для отображения недельного вида
+function showWeekView(selectedDate = null) {
+	document.querySelectorAll('.tab')[0].classList.add('active')
+	document.querySelectorAll('.tab')[1].classList.remove('active')
+	const content = document.getElementById('content')
+	content.innerHTML =
+		createWeekdays(selectedDate) +
+		createEventsList(
+			events,
+			selectedDate ? selectedDate : formatDate(new Date())
+		)
+}
+
+// Функция для отображения месячного вида
+function showMonthView() {
+	document.querySelectorAll('.tab')[1].classList.add('active')
+	document.querySelectorAll('.tab')[0].classList.remove('active')
+	const content = document.getElementById('content')
+	content.innerHTML = createMonthView(new Date(), events)
+	setupMonthNavigation(new Date(), events)
+
+	// Автопрокрутка к сегодняшнему дню (если есть)
+	setTimeout(() => {
+		const todayRow = document.getElementById('today-row')
+		if (todayRow) {
+			todayRow.scrollIntoView({ block: 'center', behavior: 'smooth' })
+		}
+	}, 100)
+}

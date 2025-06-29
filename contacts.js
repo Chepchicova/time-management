@@ -203,3 +203,15 @@ export function setupContactsPage() {
 
 	repaint()
 }
+
+export function getContacts() {
+	try {
+		return JSON.parse(localStorage.getItem(LS_KEY)) || []
+	} catch {
+		return []
+	}
+}
+
+export function getContactById(id) {
+	return getContacts().find(c => c.id === id)
+}

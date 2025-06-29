@@ -343,78 +343,99 @@ function createBottomNav() {
 }
 
 function createModal() {
-	// Получаем текущую дату в формате YYYY-MM-DD
 	const today = new Date()
 	const todayStr = [
 		today.getFullYear(),
-		(today.getMonth() + 1).toString().padStart(2, '0'),
-		today.getDate().toString().padStart(2, '0'),
+		String(today.getMonth() + 1).padStart(2, '0'),
+		String(today.getDate()).padStart(2, '0'),
 	].join('-')
-	console.log('createModal', todayStr)
 
 	return `
-	 <div class="modal" id="eventModal" style="display: none;">
-	  <div class="modal-content">
-		<span class="close-btn">&times;</span>
-		<h2>Добавить событие</h2>
-		<form id="eventForm">
-		 <div class="form-group">
-			<label for="eventTitle">Название:</label>
-			<input type="text" id="eventTitle" required maxlength="50">
-			<small class="error-message" id="titleError" style="color: red; display: none;">Максимум 50 символов</small>
+	  <div class="modal" id="eventModal" style="display:none;">
+		 <div class="modal-content">
+			<span class="close-btn">&times;</span>
+			<h2>Добавить событие</h2>
+ 
+			<form id="eventForm">
+			  <!-- Название -->
+			  <div class="form-group">
+				 <label for="eventTitle">Название:</label>
+				 <input type="text" id="eventTitle" required maxlength="50">
+				 <small class="error-message" id="titleError"
+						  style="display:none;color:red;">Максимум 50 символов</small>
+			  </div>
+ 
+			  <!-- Дата -->
+			  <div class="form-group">
+				 <label for="eventDate">Дата:</label>
+				 <input type="date" id="eventDate" required
+						  min="${todayStr}" value="${todayStr}">
+				 <small class="error-message" id="dateError"
+						  style="display:none;color:red;">Дата не может быть раньше сегодняшней</small>
+			  </div>
+ 
+			  <!-- Время -->
+			  <div class="time-group">
+				 <div class="form-group">
+					<label for="startTime">Начало:</label>
+					<input type="time" id="startTime" required>
+				 </div>
+				 <div class="form-group">
+					<label for="endTime">Конец:</label>
+					<input type="time" id="endTime" required>
+					<small class="error-message" id="timeError"
+							 style="display:none;color:red;">Время окончания должно быть позже начала</small>
+				 </div>
+			  </div>
+ 
+			  <!-- Человек / контакт -->
+			  <div class="form-group">
+				 <label for="eventPerson">Человек:</label>
+				 <select id="eventPerson">
+					<option value="">— не выбрано —</option>
+					${import('./contacts.js').then(module => {
+						const contacts = module.getContacts()
+						contacts
+							.map(
+								c =>
+									`<option value="${c.id}">
+						  ${c.name}${c.phone ? ` (${c.phone})` : ''}
+						</option>`
+							)
+							.join('')
+					})}
+				 </select>
+				 <!-- при желании можно добавить кнопку «+» для быстрого создания контакта -->
+			  </div>
+ 
+			  <!-- Оповещение -->
+			  <div class="form-group">
+				 <label class="checkbox-wrapper">
+					<input type="checkbox" id="eventNotification">
+					<span>Оповещение</span>
+				 </label>
+			  </div>
+ 
+			  <!-- Тема -->
+			  <div class="form-group">
+				 <label for="eventTheme">Тема:</label>
+				 <select id="eventTheme" required>
+					${Object.entries(EventThemes)
+						.map(([k, v]) => `<option value="${k}">${v.name}</option>`)
+						.join('')}
+				 </select>
+			  </div>
+ 
+			  <!-- Описание -->
+			  <div class="form-group">
+				 <label for="eventDescription">Описание:</label>
+				 <textarea id="eventDescription" rows="3"></textarea>
+			  </div>
+ 
+			  <button type="submit" class="submit-btn">Создать</button>
+			</form>
 		 </div>
-		 
-		 <div class="form-group">
-			<label for="eventDate">Дата:</label>
-			<input type="date" id="eventDate" required min="${todayStr}" value="${todayStr}">
-			<small class="error-message" id="dateError" style="color: red; display: none;">Дата не может быть раньше сегодняшней</small>
-		 </div>
-		 
-		 <div class="time-group">
-			<div class="form-group">
-			 <label for="startTime">Начало:</label>
-			 <input type="time" id="startTime" required>
-			</div>
-			
-			<div class="form-group">
-			 <label for="endTime">Конец:</label>
-			 <input type="time" id="endTime" required>
-			 <small class="error-message" id="timeError" style="color: red; display: none;">Время окончания должно быть позже начала</small>
-			</div>
-		 </div>
-		 
-		 <div class="form-group">
-			<label for="eventPerson">Человек:</label>
-			<input type="text" id="eventPerson">
-		 </div>
-		 
-		 <div class="form-group">
-			<label class="checkbox-wrapper">
-			  <input type="checkbox" id="eventNotification">
-			  <span>Оповещение</span>
-			</label>
-		 </div>
-		 
-		 <div class="form-group">
-			<label for="eventTheme">Тема:</label>
-			<select id="eventTheme" required>
-			 ${Object.entries(EventThemes)
-					.map(
-						([key, value]) => `<option value="${key}">${value.name}</option>`
-					)
-					.join('')}
-			</select>
-		 </div>
-		 
-		 <div class="form-group">
-			<label for="eventDescription">Описание:</label>
-			<textarea id="eventDescription" rows="3"></textarea>
-		 </div>
-		 
-		<button type="submit" class="submit-btn">Создать</button>
-		</form>
 	  </div>
-	</div>
 	`
 }
 
@@ -436,7 +457,10 @@ function fillEventForm(event) {
 	document.getElementById('eventDate').value = event.date
 	document.getElementById('startTime').value = event.timeStart
 	document.getElementById('endTime').value = event.timeEnd
-	document.getElementById('eventPerson').value = event.person || ''
+	if (event.contactId) {
+		const select = document.getElementById('eventPerson')
+		if (select) select.value = event.contactId
+	}
 	document.getElementById('eventNotification').checked = event.notification
 	document.getElementById('eventTheme').value = getThemeKey(event.theme)
 	document.getElementById('eventDescription').value = event.description || ''
@@ -554,13 +578,16 @@ function setupEventModal() {
 
 		// Если валидация не прошла, не отправляем форму
 		if (!isValid) return
+
+		const selectedContactId =
+			document.getElementById('eventPerson').value || null
 		// Если все в порядке, создаем событие
 		const formData = {
 			title: document.getElementById('eventTitle').value,
 			date: document.getElementById('eventDate').value,
 			timeStart: document.getElementById('startTime').value,
 			timeEnd: document.getElementById('endTime').value,
-			person: document.getElementById('eventPerson').value,
+			contactId: selectedContactId ? +selectedContactId : null,
 			notification: document.getElementById('eventNotification').checked,
 			theme: getThemeByName(document.getElementById('eventTheme').value),
 			description: document.getElementById('eventDescription').value,
@@ -589,6 +616,7 @@ function setupEventModal() {
 				currentDate.dataset.date
 			)
 		} else if (!currentDate) {
+			showWeekView(date.value)
 		}
 
 		modal.style.display = 'none'
