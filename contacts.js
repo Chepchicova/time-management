@@ -98,8 +98,8 @@ export function setupContactsPage() {
            </div>
    
            <div class="contact-actions">
-             <button class="edit-btn" title="Редактировать"><img src="/assets/edit-03.svg" /></button>
-           <button class="del-btn"  title="Удалить"><img src="/assets/delete-1.svg" /></button>
+             <button class="edit-btn" title="Редактировать"><img src="/assets/edit.svg" /></button>
+           <button class="del-btn"  title="Удалить"><img src="/assets/delete.svg" /></button>
            </div>
          </li>
        `

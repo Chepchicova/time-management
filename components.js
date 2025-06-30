@@ -433,6 +433,7 @@ function createModal() {
 			  </div>
  
 			  <button type="submit" class="submit-btn">Создать</button>
+			  <button class="delete-btn" style="display:none;">Удалить</button>
 			</form>
 		 </div>
 	  </div>
@@ -478,6 +479,9 @@ function setEditMode() {
 	// Меняем текст кнопки
 	const submitBtn = modal.querySelector('.submit-btn')
 	if (submitBtn) submitBtn.textContent = 'Сохранить'
+
+	const deleteBtn = modal.querySelector('.delete-btn')
+	if (deleteBtn) deleteBtn.style.display = 'block'
 }
 
 // Функция перевода в режим создания
@@ -492,6 +496,9 @@ function setCreateMode() {
 	// Меняем текст кнопки
 	const submitBtn = modal.querySelector('.submit-btn')
 	if (submitBtn) submitBtn.textContent = 'Создать'
+
+	const deleteBtn = modal.querySelector('.delete-btn')
+	if (deleteBtn) deleteBtn.style.display = 'none'
 }
 
 // После добавления HTML в DOM нужно добавить обработчики:
@@ -500,6 +507,7 @@ function setupEventModal() {
 	const openBtn = document.getElementById('openModalBtn')
 	const closeBtn = document.querySelector('.close-btn')
 	const form = document.getElementById('eventForm')
+	const deleteBtn = document.querySelector('.delete-btn')
 	let currentEventId = null
 
 	openBtn.addEventListener('click', () => {
@@ -522,6 +530,19 @@ function setupEventModal() {
 			modal.style.display = 'none'
 			resetErrors()
 			form.reset()
+		}
+	})
+
+	deleteBtn.addEventListener('click', () => {
+		if (currentEventId) {
+			events = events.filter(event => event.id !== currentEventId)
+
+			const eventElement = document.querySelector(
+				`[data-event-id="${currentEventId}"]`
+			)
+			if (eventElement) {
+				eventElement.remove()
+			}
 		}
 	})
 

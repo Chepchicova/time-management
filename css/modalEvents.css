@@ -73,10 +73,20 @@ textarea {
 	margin-right: 8px;
 }
 
-button[type='submit'] {
+.submit-btn {
 	width: 100%;
 	padding: 12px;
 	background: linear-gradient(90deg, #010055, #7075ff);
+	color: white;
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+	margin-bottom: 10px;
+}
+.delete-btn {
+	width: 100%;
+	padding: 12px;
+	background: linear-gradient(90deg, #a00303, #e66745);
 	color: white;
 	border: none;
 	border-radius: 8px;
